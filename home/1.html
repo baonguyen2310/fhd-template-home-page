@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung Tâm Giáo Dục EduStar - Khơi Dậy Tiềm Năng</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB', // Blue 600
+                        secondary: '#F97316', // Orange 500
+                        dark: '#1E293B', // Slate 800
+                        light: '#F8FAFC', // Slate 50
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar hide */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        /* Smooth transition for FAQ */
+        .faq-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.active {
+            opacity: 1;
+        }
+        
+        .rotate-icon {
+            transition: transform 0.3s ease;
+        }
+        .rotate-icon.active {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700 bg-white">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-primary flex items-center gap-2">
+                <i class="fa-solid fa-graduation-cap"></i> EduStar
+            </a>
+            <div class="hidden md:flex gap-8 font-medium">
+                <a href="#vision" class="hover:text-primary transition">Về chúng tôi</a>
+                <a href="#teachers" class="hover:text-primary transition">Giáo viên</a>
+                <a href="#testimonials" class="hover:text-primary transition">Học viên</a>
+                <a href="#faq" class="hover:text-primary transition">Hỏi đáp</a>
+            </div>
+            <a href="#contact" class="hidden md:block px-6 py-2 bg-primary text-white rounded-full font-semibold hover:bg-blue-700 transition transform hover:-translate-y-0.5 shadow-lg shadow-blue-500/30">
+                Đăng ký ngay
+            </a>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-2xl text-dark" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 flex flex-col gap-4 shadow-lg">
+            <a href="#vision" class="block py-2 hover:text-primary">Về chúng tôi</a>
+            <a href="#teachers" class="block py-2 hover:text-primary">Giáo viên</a>
+            <a href="#testimonials" class="block py-2 hover:text-primary">Học viên</a>
+            <a href="#faq" class="block py-2 hover:text-primary">Hỏi đáp</a>
+            <a href="#contact" class="block py-2 font-bold text-primary">Đăng ký ngay</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (Existing Placeholder) -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-gradient-to-br from-slate-50 to-blue-50 overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+        <div class="absolute top-0 left-0 -ml-20 -mt-20 w-96 h-96 bg-orange-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+        
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-blue-100 text-primary text-sm font-semibold mb-6">Hành trình tri thức mới</span>
+            <h1 class="text-4xl md:text-6xl font-bold text-dark leading-tight mb-6">
+                Kiến Tạo Tương Lai <br> <span class="text-primary">Vững Bước Thành Công</span>
+            </h1>
+            <p class="text-lg text-slate-600 mb-8 max-w-2xl mx-auto">
+                Chúng tôi không chỉ dạy kiến thức, chúng tôi đánh thức niềm đam mê học tập và rèn luyện tư duy cho thế hệ trẻ.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#contact" class="px-8 py-3 bg-primary text-white rounded-full font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-500/30">Tư vấn lộ trình</a>
+                <a href="#vision" class="px-8 py-3 bg-white text-dark border border-slate-200 rounded-full font-semibold hover:bg-slate-50 transition">Tìm hiểu thêm</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: TẦM NHÌN & VĂN HÓA (Vision & Culture) -->
+    <section id="vision" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Image Side -->
+                <div class="relative">
+                    <div class="absolute inset-0 bg-secondary rounded-2xl transform rotate-3 opacity-20"></div>
+                    <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Students learning" class="relative rounded-2xl shadow-xl w-full object-cover h-[400px] md:h-[500px]">
+                    <div class="absolute -bottom-6 -right-6 bg-white p-6 rounded-xl shadow-lg max-w-xs hidden md:block">
+                        <p class="font-bold text-dark text-lg mb-1">"Văn hóa Hạnh phúc"</p>
+                        <p class="text-sm text-slate-500">Mỗi ngày đến lớp là một ngày vui.</p>
+                    </div>
+                </div>
+
+                <!-- Text Side -->
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark mb-6 relative inline-block">
+                        Câu Chuyện Của EduStar
+                        <span class="absolute bottom-0 left-0 w-1/2 h-1 bg-secondary rounded-full"></span>
+                    </h2>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-primary mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-eye"></i> Tầm Nhìn
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                Trở thành hệ thống giáo dục tiên phong trong việc áp dụng phương pháp cá nhân hóa, nơi mỗi học viên được thấu hiểu, tôn trọng và phát triển theo đúng năng lực tiềm ẩn của bản thân.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-secondary mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-heart"></i> Văn Hóa
+                            </h3>
+                            <p class="text-slate-600 leading-relaxed">
+                                Chúng tôi xây dựng môi trường <strong>"Học tập hạnh phúc"</strong>. Tại đây, không có áp lực thành tích sáo rỗng, chỉ có sự nỗ lực được ghi nhận. Giáo viên không chỉ là người thầy mà là người bạn đồng hành, người truyền cảm hứng.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: GIÁ TRỊ CỐT LÕI (Core Values) -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">Giá Trị Cốt Lõi</h2>
+                <p class="text-slate-500">Kim chỉ nam cho mọi hoạt động giảng dạy và vận hành</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-primary group">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Chất Lượng Thật</h3>
+                    <p class="text-slate-600">
+                        Cam kết kết quả đầu ra dựa trên năng lực thực tế. Không chạy theo điểm số ảo, tập trung vào kiến thức nền tảng vững chắc.
+                    </p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-secondary group">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center text-secondary text-2xl mb-6 group-hover:bg-secondary group-hover:text-white transition">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Sáng Tạo & Đổi Mới</h3>
+                    <p class="text-slate-600">
+                        Luôn cập nhật phương pháp giảng dạy mới nhất. Khuyến khích học sinh tư duy phản biện và giải quyết vấn đề theo cách riêng.
+                    </p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-primary group">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center text-primary text-2xl mb-6 group-hover:bg-primary group-hover:text-white transition">
+                        <i class="fa-solid fa-hand-holding-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-dark mb-3">Tận Tâm Phụng Sự</h3>
+                    <p class="text-slate-600">
+                        Mỗi học sinh là một cá thể duy nhất cần được quan tâm riêng biệt. Sự tiến bộ của học viên là niềm hạnh phúc của chúng tôi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: ĐỘI NGŨ GIÁO VIÊN (Teachers - Slider) -->
+    <section id="teachers" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark mb-2">Người Truyền Lửa</h2>
+                    <p class="text-slate-500">Đội ngũ giáo viên giàu kinh nghiệm và nhiệt huyết</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="scrollSlider('teacher-slider', 'left')" class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="scrollSlider('teacher-slider', 'right')" class="w-10 h-10 rounded-full border border-slate-300 flex items-center justify-center text-slate-500 hover:bg-primary hover:text-white hover:border-primary transition">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Slider Container -->
+            <div id="teacher-slider" class="flex gap-6 overflow-x-auto scrollbar-hide scroll-smooth pb-8 snap-x snap-mandatory">
+                
+                <!-- Teacher Card 1 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 snap-center">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <span class="text-white text-sm font-medium bg-secondary px-2 py-1 rounded">Tiếng Anh</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark">Cô Minh Anh</h3>
+                        <p class="text-sm text-primary mb-3">Thạc sĩ TESOL - Đại học Victoria</p>
+                        <p class="text-slate-500 text-sm line-clamp-3">
+                            Với 10 năm kinh nghiệm luyện thi IELTS, cô Minh Anh nổi tiếng với phương pháp dạy "Học sâu - Nhớ lâu", giúp học sinh yêu thích tiếng Anh tự nhiên.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Teacher Card 2 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 snap-center">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <span class="text-white text-sm font-medium bg-blue-500 px-2 py-1 rounded">Toán Học</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark">Thầy Quốc Tuấn</h3>
+                        <p class="text-sm text-primary mb-3">Cử nhân Sư phạm Toán - ĐHSP</p>
+                        <p class="text-slate-500 text-sm line-clamp-3">
+                            Thầy Tuấn biến những con số khô khan thành những bài toán tư duy thú vị. Phong cách giảng dạy hài hước, gần gũi.
+                        </p>
+                    </div>
+                </div>
+
+                 <!-- Teacher Card 3 -->
+                 <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 snap-center">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <span class="text-white text-sm font-medium bg-green-500 px-2 py-1 rounded">Vật Lý</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark">Cô Thu Hà</h3>
+                        <p class="text-sm text-primary mb-3">Thạc sĩ Vật Lý Ứng Dụng</p>
+                        <p class="text-slate-500 text-sm line-clamp-3">
+                            Chuyên gia bồi dưỡng học sinh giỏi. Cô luôn chú trọng vào thực nghiệm và ứng dụng thực tế của bài học.
+                        </p>
+                    </div>
+                </div>
+                
+                 <!-- Teacher Card 4 -->
+                 <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden border border-slate-100 snap-center">
+                    <div class="h-64 overflow-hidden relative group">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                        <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                            <span class="text-white text-sm font-medium bg-purple-500 px-2 py-1 rounded">Kỹ Năng</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark">Thầy Hoàng Nam</h3>
+                        <p class="text-sm text-primary mb-3">Chuyên gia Kỹ năng mềm</p>
+                        <p class="text-slate-500 text-sm line-clamp-3">
+                            Giúp học sinh tự tin thuyết trình, quản lý thời gian và xây dựng tư duy lãnh đạo.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: PHẢN HỒI HỌC VIÊN (Testimonials) -->
+    <section id="testimonials" class="py-20 bg-dark text-white relative">
+        <!-- Background decorations -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden opacity-10 pointer-events-none">
+            <i class="fa-solid fa-quote-right absolute top-10 left-10 text-9xl"></i>
+            <i class="fa-solid fa-quote-right absolute bottom-10 right-10 text-9xl"></i>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Câu Chuyện Thành Công</h2>
+                <p class="text-slate-300">Hàng ngàn học viên đã thay đổi, còn bạn thì sao?</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feedback 1 -->
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-primary transition duration-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h4 class="font-bold">Nguyễn Văn An</h4>
+                            <p class="text-xs text-slate-400">Lớp Toán 12 - Đậu ĐH Bách Khoa</p>
+                        </div>
+                        <div class="ml-auto text-yellow-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 italic">
+                        "Trước đây mình rất sợ môn Toán, nhưng nhờ phương pháp sơ đồ tư duy của thầy Tuấn, mình đã hệ thống lại được kiến thức và tự tin hơn rất nhiều."
+                    </p>
+                </div>
+
+                <!-- Feedback 2 -->
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-primary transition duration-300 transform md:-translate-y-4 shadow-xl shadow-primary/20">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h4 class="font-bold">Trần Thị Mai</h4>
+                            <p class="text-xs text-slate-400">Lớp IELTS 6.5+</p>
+                        </div>
+                        <div class="ml-auto text-yellow-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 italic">
+                        "Môi trường ở EduStar rất thân thiện. Giáo viên luôn sẵn sàng giải đáp thắc mắc ngay cả ngoài giờ học. Mình đã đạt 7.5 IELTS sau 6 tháng."
+                    </p>
+                </div>
+
+                <!-- Feedback 3 -->
+                <div class="bg-slate-800 p-8 rounded-2xl border border-slate-700 hover:border-primary transition duration-300">
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h4 class="font-bold">Lê Quốc Bảo</h4>
+                            <p class="text-xs text-slate-400">Lớp Lý 10</p>
+                        </div>
+                        <div class="ml-auto text-yellow-400 text-xs">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-slate-300 italic">
+                        "Em thích nhất là các buổi thí nghiệm thực hành. Nó giúp em hiểu bản chất vấn đề chứ không phải học vẹt công thức. Rất tuyệt vời!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: FAQ (Câu hỏi thường gặp) -->
+    <section id="faq" class="py-20 bg-blue-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-12">
+                <span class="text-primary font-bold uppercase tracking-wider text-sm">Hỗ Trợ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mt-2">Câu Hỏi Thường Gặp</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-50 transition">
+                        <span class="font-bold text-dark text-lg">Trung tâm có tổ chức thi thử/kiểm tra đầu vào không?</span>
+                        <i class="fa-solid fa-chevron-down text-primary rotate-icon"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <div class="pb-6 pt-2 text-slate-600 border-t border-slate-100">
+                            Có. Trước khi xếp lớp, 100% học viên sẽ được làm bài kiểm tra năng lực miễn phí và tư vấn lộ trình học phù hợp nhất với trình độ hiện tại.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-50 transition">
+                        <span class="font-bold text-dark text-lg">Sĩ số mỗi lớp học là bao nhiêu?</span>
+                        <i class="fa-solid fa-chevron-down text-primary rotate-icon"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <div class="pb-6 pt-2 text-slate-600 border-t border-slate-100">
+                            Để đảm bảo chất lượng, lớp Tiêu chuẩn từ 10-15 học viên và lớp Chất lượng cao chỉ từ 5-8 học viên. Điều này giúp giáo viên theo sát từng em.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-50 transition">
+                        <span class="font-bold text-dark text-lg">Nếu nghỉ học có được học bù không?</span>
+                        <i class="fa-solid fa-chevron-down text-primary rotate-icon"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <div class="pb-6 pt-2 text-slate-600 border-t border-slate-100">
+                            Học viên được hỗ trợ học bù tại các lớp có cùng trình độ hoặc xem lại video bài giảng (đối với một số môn). Ngoài ra, có các giờ phụ đạo miễn phí cuối tuần.
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- FAQ Item 4 -->
+                 <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none hover:bg-slate-50 transition">
+                        <span class="font-bold text-dark text-lg">Học phí đóng theo tháng hay theo khóa?</span>
+                        <i class="fa-solid fa-chevron-down text-primary rotate-icon"></i>
+                    </button>
+                    <div class="faq-content bg-white px-6">
+                        <div class="pb-6 pt-2 text-slate-600 border-t border-slate-100">
+                            Phụ huynh có thể linh hoạt đóng theo tháng, quý hoặc cả khóa. Đặc biệt, khi đóng theo khóa sẽ nhận được ưu đãi lên đến 15%.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION & FOOTER -->
+    <section id="contact" class="bg-primary py-16">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold text-white mb-6">Sẵn Sàng Bứt Phá Cùng EduStar?</h2>
+            <p class="text-blue-100 mb-8 max-w-2xl mx-auto">Đăng ký ngay hôm nay để nhận buổi tư vấn miễn phí và bộ tài liệu độc quyền.</p>
+            <form class="max-w-md mx-auto bg-white p-2 rounded-full flex shadow-2xl">
+                <input type="tel" placeholder="Nhập số điện thoại của bạn..." class="flex-1 px-6 py-3 rounded-l-full outline-none text-dark">
+                <button type="button" onclick="alert('Cảm ơn bạn! Chúng tôi sẽ liên hệ lại sớm.')" class="bg-secondary text-white px-8 py-3 rounded-full font-bold hover:bg-orange-600 transition">Gửi Ngay</button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-slate-400 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 grid md:grid-cols-4 gap-8">
+            <div>
+                <a href="#" class="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+                    <i class="fa-solid fa-graduation-cap"></i> EduStar
+                </a>
+                <p class="text-sm">Nơi ươm mầm tài năng và kiến tạo tương lai cho thế hệ trẻ Việt Nam.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Liên Hệ</h4>
+                <p class="mb-2"><i class="fa-solid fa-location-dot mr-2"></i> 123 Đường ABC, Quận 1, TP.HCM</p>
+                <p class="mb-2"><i class="fa-solid fa-phone mr-2"></i> 0909 123 456</p>
+                <p><i class="fa-solid fa-envelope mr-2"></i> tuvan@edustar.edu.vn</p>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Liên Kết</h4>
+                <ul class="space-y-2 text-sm">
+                    <li><a href="#" class="hover:text-primary">Về chúng tôi</a></li>
+                    <li><a href="#" class="hover:text-primary">Đội ngũ giáo viên</a></li>
+                    <li><a href="#" class="hover:text-primary">Tuyển dụng</a></li>
+                    <li><a href="#" class="hover:text-primary">Chính sách bảo mật</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-bold mb-4">Mạng Xã Hội</h4>
+                <div class="flex gap-4">
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-12 pt-8 border-t border-slate-800 text-sm">
+            &copy; 2023 EduStar Center. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. FAQ Accordion Logic
+        const faqButtons = document.querySelectorAll('.faq-btn');
+
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('.rotate-icon');
+
+                // Toggle Active State
+                content.classList.toggle('active');
+                icon.classList.toggle('active');
+
+                // Adjust Max-Height for animation
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                }
+
+                // Close other items (Optional - Accordion style)
+                faqButtons.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        const otherContent = otherBtn.nextElementSibling;
+                        const otherIcon = otherBtn.querySelector('.rotate-icon');
+                        otherContent.style.maxHeight = null;
+                        otherContent.classList.remove('active');
+                        otherIcon.classList.remove('active');
+                    }
+                });
+            });
+        });
+
+        // 2. Horizontal Slider Logic (Teachers)
+        function scrollSlider(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            const scrollAmount = 320; // Width of card + gap roughly
+            
+            if (direction === 'left') {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // 3. Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('bg-white/90', 'bg-white');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('bg-white', 'bg-white/90');
+            }
+        });
+    </script>
+</body>
+</html>

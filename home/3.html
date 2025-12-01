@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullHouse Dev - Khởi đầu sự nghiệp Lập trình viên</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6', // Blue primary
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                            accent: '#f97316', // Orange for CTA
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar for smooth horizontal scrolling */
+        .hide-scroll-bar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scroll-bar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .scroll-snap-x {
+            scroll-snap-type: x mandatory;
+        }
+        .snap-center {
+            scroll-snap-align: center;
+        }
+        
+        /* Smooth fade in animation */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .accordion-content {
+            transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .accordion-content.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-gray-50 antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-md shadow-sm transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-brand-700 flex items-center gap-2">
+                <i class="fa-solid fa-code"></i> FullHouse Dev
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center font-medium">
+                <a href="#ve-chung-toi" class="hover:text-brand-600 transition">Về chúng tôi</a>
+                <a href="#gia-tri" class="hover:text-brand-600 transition">Giá trị</a>
+                <a href="#giang-vien" class="hover:text-brand-600 transition">Giảng viên</a>
+                <a href="#hoc-vien" class="hover:text-brand-600 transition">Cảm nhận</a>
+                <a href="#faq" class="hover:text-brand-600 transition">Hỏi đáp</a>
+                <a href="#" class="bg-brand-600 text-white px-5 py-2 rounded-full hover:bg-brand-700 transition shadow-lg hover:shadow-xl">Đăng ký ngay</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t p-4 flex-col space-y-4 shadow-lg">
+            <a href="#ve-chung-toi" class="block text-gray-700 hover:text-brand-600">Về chúng tôi</a>
+            <a href="#gia-tri" class="block text-gray-700 hover:text-brand-600">Giá trị cốt lõi</a>
+            <a href="#giang-vien" class="block text-gray-700 hover:text-brand-600">Đội ngũ giảng viên</a>
+            <a href="#faq" class="block text-gray-700 hover:text-brand-600">FAQ</a>
+            <a href="#" class="block text-center bg-brand-600 text-white py-2 rounded-lg">Đăng ký tư vấn</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="FullHouse Dev Team" class="w-full h-full object-cover opacity-10">
+            <div class="absolute inset-0 bg-gradient-to-b from-transparent to-white"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight mb-6 fade-in-up" style="animation-delay: 0.1s;">
+                Biến Đam Mê Lập Trình <br> <span class="text-brand-600">Thành Sự Nghiệp Vững Chắc</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 fade-in-up" style="animation-delay: 0.3s;">
+                Tại FullHouse Dev, chúng tôi không chỉ dạy viết code. Chúng tôi xây dựng tư duy, rèn luyện kỹ năng thực chiến và đồng hành cùng bạn chinh phục các công ty công nghệ hàng đầu.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 fade-in-up" style="animation-delay: 0.5s;">
+                <button class="bg-brand-accent hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition transform hover:-translate-y-1">
+                    Xem Lộ Trình Học
+                </button>
+                <button class="bg-white border border-gray-300 hover:border-brand-500 hover:text-brand-600 text-gray-700 font-bold py-3 px-8 rounded-full shadow-sm transition">
+                    Tư Vấn Miễn Phí
+                </button>
+            </div>
+            
+            <!-- Stats -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center border-t border-gray-200 pt-8 fade-in-up" style="animation-delay: 0.7s;">
+                <div>
+                    <span class="block text-3xl font-bold text-brand-700">2000+</span>
+                    <span class="text-sm text-gray-500">Học viên tốt nghiệp</span>
+                </div>
+                <div>
+                    <span class="block text-3xl font-bold text-brand-700">95%</span>
+                    <span class="text-sm text-gray-500">Có việc làm ngay</span>
+                </div>
+                <div>
+                    <span class="block text-3xl font-bold text-brand-700">50+</span>
+                    <span class="text-sm text-gray-500">Đối tác doanh nghiệp</span>
+                </div>
+                <div>
+                    <span class="block text-3xl font-bold text-brand-700">24/7</span>
+                    <span class="text-sm text-gray-500">Hỗ trợ trọn đời</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION: TẦM NHÌN & VĂN HOÁ (STORY TELLING) -->
+    <section id="ve-chung-toi" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- Image Grid -->
+                <div class="lg:w-1/2 relative">
+                    <div class="grid grid-cols-2 gap-4">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Culture 1" class="rounded-2xl shadow-lg w-full h-64 object-cover transform translate-y-8">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Culture 2" class="rounded-2xl shadow-lg w-full h-64 object-cover">
+                    </div>
+                    <!-- Decorative element -->
+                    <div class="absolute -z-10 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-brand-50 rounded-full blur-3xl opacity-50"></div>
+                </div>
+
+                <!-- Content -->
+                <div class="lg:w-1/2">
+                    <span class="text-brand-600 font-semibold tracking-wider uppercase text-sm">Câu chuyện của chúng tôi</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2 mb-6">Ngôi Nhà Chung Của Những Dev Đam Mê</h2>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        FullHouse Dev không chỉ là một trung tâm đào tạo, mà là một "Ngôi nhà" (Full House) đúng nghĩa. Xuất phát điểm từ những kỹ sư phần mềm kỳ cựu, chúng tôi hiểu rằng khoảng cách giữa lý thuyết đại học và thực tế doanh nghiệp là rất lớn.
+                    </p>
+                    <p class="text-gray-600 mb-6 leading-relaxed">
+                        Tầm nhìn của chúng tôi là xoá bỏ khoảng cách đó. Tại đây, văn hoá <strong>"Code như hơi thở"</strong> và tinh thần <strong>"Chia sẻ không giấu nghề"</strong> được đặt lên hàng đầu. Chúng tôi đào tạo ra những đồng nghiệp tương lai, những người không chỉ giỏi kỹ thuật mà còn có tư duy giải quyết vấn đề sắc bén.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-green-500 text-xl"></i>
+                            <span class="text-gray-700 font-medium">Môi trường làm việc giả lập doanh nghiệp.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-green-500 text-xl"></i>
+                            <span class="text-gray-700 font-medium">Mentor kèm cặp 1:1, sửa lỗi từng dòng code.</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-check-circle text-green-500 text-xl"></i>
+                            <span class="text-gray-700 font-medium">Cộng đồng cựu học viên hỗ trợ trọn đời.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: GIÁ TRỊ CỐT LÕI -->
+    <section id="gia-tri" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Core Values</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">5 Giá Trị Định Hình FullHouse Dev</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-brand-500 group">
+                    <div class="w-14 h-14 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Thực Chiến (Practical)</h3>
+                    <p class="text-gray-600">Nói không với lý thuyết suông. 80% thời lượng là coding dự án thực tế, đối mặt với bug và deploy sản phẩm thật.</p>
+                </div>
+
+                <!-- Value 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-brand-accent group">
+                    <div class="w-14 h-14 bg-orange-100 rounded-full flex items-center justify-center text-brand-accent text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Tận Tâm (Dedication)</h3>
+                    <p class="text-gray-600">Giảng viên không chỉ dạy xong rồi về. Chúng tôi support ngoài giờ, code review chi tiết và tư vấn định hướng nghề nghiệp.</p>
+                </div>
+
+                <!-- Value 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition duration-300 border-b-4 border-purple-500 group">
+                    <div class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 text-2xl mb-6 group-hover:scale-110 transition">
+                        <i class="fa-solid fa-rotate"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cập Nhật (Update)</h3>
+                    <p class="text-gray-600">Công nghệ thay đổi hàng giờ. Giáo trình tại FullHouse Dev luôn được cập nhật phiên bản mới nhất (React, NextJS, Docker...).</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: ĐỘI NGŨ GIẢNG VIÊN (SLIDER) -->
+    <section id="giang-vien" class="py-20 bg-white overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Mentors</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Người Dẫn Đường Tâm Huyết</h2>
+                </div>
+                <!-- Navigation Buttons -->
+                <div class="flex gap-2">
+                    <button onclick="scrollContainer('mentors-slider', -1)" class="w-10 h-10 rounded-full border border-gray-300 hover:bg-brand-600 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="scrollContainer('mentors-slider', 1)" class="w-10 h-10 rounded-full border border-gray-300 hover:bg-brand-600 hover:text-white flex items-center justify-center transition">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Slider Container -->
+            <div id="mentors-slider" class="flex overflow-x-auto hide-scroll-bar snap-x snap-mandatory gap-6 pb-4 scroll-smooth">
+                
+                <!-- Mentor 1 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden snap-center border border-gray-100">
+                    <div class="h-64 bg-gray-200 relative">
+                         <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mentor" class="w-full h-full object-cover">
+                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                             <h3 class="text-white text-xl font-bold">Nguyễn Văn A</h3>
+                             <p class="text-gray-200 text-sm">Senior Fullstack Developer</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"10 năm kinh nghiệm tại FPT Software & VinGroup. Chuyên gia về Microservices và System Design."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded font-medium">Java</span>
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded font-medium">Spring Boot</span>
+                            <span class="px-2 py-1 bg-blue-50 text-blue-600 text-xs rounded font-medium">AWS</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 2 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden snap-center border border-gray-100">
+                    <div class="h-64 bg-gray-200 relative">
+                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mentor" class="w-full h-full object-cover">
+                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                             <h3 class="text-white text-xl font-bold">Trần Thị B</h3>
+                             <p class="text-gray-200 text-sm">Frontend Lead</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"Cựu kỹ sư tại Shopee Singapore. Đam mê UX/UI và tối ưu hiệu năng Frontend."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs rounded font-medium">ReactJS</span>
+                            <span class="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs rounded font-medium">NextJS</span>
+                            <span class="px-2 py-1 bg-yellow-50 text-yellow-600 text-xs rounded font-medium">UI/UX</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 3 -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden snap-center border border-gray-100">
+                    <div class="h-64 bg-gray-200 relative">
+                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mentor" class="w-full h-full object-cover">
+                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                             <h3 class="text-white text-xl font-bold">Lê Văn C</h3>
+                             <p class="text-gray-200 text-sm">DevOps Engineer</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"Chuyên gia triển khai hệ thống lớn, bảo mật và CI/CD. Phương châm: Tự động hoá mọi thứ."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-green-50 text-green-600 text-xs rounded font-medium">Docker</span>
+                            <span class="px-2 py-1 bg-green-50 text-green-600 text-xs rounded font-medium">K8s</span>
+                            <span class="px-2 py-1 bg-green-50 text-green-600 text-xs rounded font-medium">Azure</span>
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- Mentor 4 -->
+                 <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-lg overflow-hidden snap-center border border-gray-100">
+                    <div class="h-64 bg-gray-200 relative">
+                         <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mentor" class="w-full h-full object-cover">
+                         <div class="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4">
+                             <h3 class="text-white text-xl font-bold">Phạm Minh D</h3>
+                             <p class="text-gray-200 text-sm">Mobile Developer</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"5 năm phát triển ứng dụng mobile đa nền tảng. Có kinh nghiệm publish 20+ app lên Store."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-pink-50 text-pink-600 text-xs rounded font-medium">Flutter</span>
+                            <span class="px-2 py-1 bg-pink-50 text-pink-600 text-xs rounded font-medium">React Native</span>
+                            <span class="px-2 py-1 bg-pink-50 text-pink-600 text-xs rounded font-medium">iOS</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: CẢM NHẬN HỌC VIÊN -->
+    <section id="hoc-vien" class="py-20 bg-brand-900 text-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-16">Học Viên Nói Gì Về FullHouse?</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-brand-800 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-600 absolute top-4 left-4 opacity-50"></i>
+                    <p class="mt-6 mb-6 text-gray-300 italic">"Mình xuất thân trái ngành, hoàn toàn mù mờ về code. Nhờ lộ trình rõ ràng và sự support nhiệt tình của anh chị mentor, sau 6 tháng mình đã land được job tại Sun Asterisk."</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-brand-500">
+                        <div>
+                            <h4 class="font-bold">Hoàng Tuấn Anh</h4>
+                            <p class="text-xs text-gray-400">Khóa Fullstack Web K15</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-brand-800 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-600 absolute top-4 left-4 opacity-50"></i>
+                    <p class="mt-6 mb-6 text-gray-300 italic">"Điều mình thích nhất là không khí học tập như đi làm. Deadline, review code, standup meeting... giúp mình không bị bỡ ngỡ khi bước vào môi trường doanh nghiệp thực tế."</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-brand-500">
+                        <div>
+                            <h4 class="font-bold">Lê Thanh Mai</h4>
+                            <p class="text-xs text-gray-400">Khóa Java Spring Boot K12</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-brand-800 p-8 rounded-2xl relative">
+                    <i class="fa-solid fa-quote-left text-4xl text-brand-600 absolute top-4 left-4 opacity-50"></i>
+                    <p class="mt-6 mb-6 text-gray-300 italic">"Giáo trình update rất nhanh. Mình học ReactJS vừa xong là trung tâm đã update NextJS 13 vào dạy luôn. Cực kỳ đáng tiền!"</p>
+                    <div class="flex items-center gap-4">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" alt="Student" class="w-12 h-12 rounded-full border-2 border-brand-500">
+                        <div>
+                            <h4 class="font-bold">Nguyễn Đức Trung</h4>
+                            <p class="text-xs text-gray-400">Khóa Frontend Master</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FAQ - CÂU HỎI THƯỜNG GẶP -->
+    <section id="faq" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="text-center mb-12">
+                <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">FAQ</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Câu Hỏi Thường Gặp</h2>
+            </div>
+
+            <div class="space-y-4">
+                <!-- Question 1 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-gray-800">Người mới bắt đầu (Zero kinh nghiệm) có học được không?</span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 text-gray-600">
+                        <div class="py-4">
+                            Hoàn toàn được! FullHouse Dev có lộ trình "Zero to Hero" thiết kế riêng cho người trái ngành. Chúng tôi bắt đầu từ tư duy logic cơ bản nhất trước khi vào code, đảm bảo bạn nắm chắc nền tảng.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-gray-800">Cam kết việc làm sau khóa học như thế nào?</span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 text-gray-600">
+                        <div class="py-4">
+                            Trung tâm cam kết hỗ trợ việc làm trọn đời. Chúng tôi có mạng lưới đối tác doanh nghiệp và sẽ hỗ trợ bạn làm CV, Mock Interview (phỏng vấn thử) cho đến khi bạn nhận được Offer Letter.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 3 -->
+                <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-gray-800">Thời gian học có linh động không?</span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 text-gray-600">
+                        <div class="py-4">
+                            Có. Chúng tôi có các lớp tối (2-4-6 hoặc 3-5-7) cho người đi làm và lớp Fulltime ban ngày. Ngoài ra, bạn có thể xem lại video record bài giảng bất cứ lúc nào nếu bận đột xuất.
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Question 4 -->
+                 <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-gray-800">Học phí có được đóng chia nhỏ không?</span>
+                        <i class="fa-solid fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-gray-50 text-gray-600">
+                        <div class="py-4">
+                            FullHouse Dev hỗ trợ đóng học phí làm 2-3 đợt. Ngoài ra còn có chính sách học bổng cho học viên có hoàn cảnh khó khăn nhưng có quyết tâm cao.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-code"></i> FullHouse Dev
+                    </a>
+                    <p class="text-sm text-gray-400 mb-6">Nơi khởi đầu của những lập trình viên chuyên nghiệp. Chất lượng - Tận tâm - Thực chiến.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-facebook text-xl"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-youtube text-xl"></i></a>
+                        <a href="#" class="hover:text-white transition"><i class="fa-brands fa-tiktok text-xl"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Về FullHouse</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-500 transition">Câu chuyện thương hiệu</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Đội ngũ giảng viên</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Tuyển dụng</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Tin tức & Sự kiện</a></li>
+                    </ul>
+                </div>
+
+                <!-- Courses -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Khóa Học</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-brand-500 transition">Frontend Master (React/Next)</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Java Spring Boot Fullstack</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Data Analysis</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Lập trình cho trẻ em</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">Liên Hệ</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1"></i>
+                            <span>Tầng 3, Tòa nhà Tech, 123 Đường ABC, Quận Cầu Giấy, Hà Nội</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone"></i>
+                            <span>0987.654.321 (Hotline)</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-envelope"></i>
+                            <span>tuyensinh@fullhouse.dev</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-sm text-gray-500">
+                &copy; 2024 FullHouse Dev. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- Mobile Menu Logic ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- FAQ Accordion Logic ---
+        const faqBtns = document.querySelectorAll('.faq-btn');
+
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('.fa-chevron-down');
+                
+                // Close other open items (Optional - Accordion style)
+                faqBtns.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                        otherBtn.nextElementSibling.classList.remove('active');
+                        otherBtn.querySelector('.fa-chevron-down').style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.classList.remove('active');
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('active');
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // --- Slider Scroll Logic (Horizontal) ---
+        function scrollContainer(containerId, direction) {
+            const container = document.getElementById(containerId);
+            const scrollAmount = 320; // Width of card + gap
+            
+            if (direction === 1) {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            }
+        }
+        
+        // --- Navbar Scroll Effect ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.replace('bg-white/90', 'bg-white');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('bg-white', 'bg-white/90');
+            }
+        });
+
+    </script>
+</body>
+</html>
