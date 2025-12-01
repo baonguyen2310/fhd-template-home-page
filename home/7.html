@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trung Tâm Công Nghệ Tương Lai</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            --primary-color: #00f2ea; /* Cyan neon */
+            --secondary-color: #ff0050; /* Magenta neon */
+            --bg-dark: #0a0b10;
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-light: #f0f0f0;
+            --text-dim: #a0a0a0;
+            --font-main: 'Montserrat', sans-serif;
+            --font-tech: 'Orbitron', sans-serif;
+            --padding-section: 80px 20px;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: var(--font-tech);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        /* --- UTILITIES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .text-gradient {
+            background: linear-gradient(45deg, var(--primary-color), #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .highlight {
+            color: var(--primary-color);
+        }
+
+        /* --- SCROLL ANIMATION CLASS --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HERO SECTION (Placeholder context) --- */
+        .hero {
+            height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, #1a1c29 0%, #000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.05;
+            animation: rotateBg 60s linear infinite;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px rgba(0, 242, 234, 0.5);
+        }
+
+        @keyframes rotateBg {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- 1. VISION & CULTURE --- */
+        .vision-culture {
+            padding: var(--padding-section);
+            position: relative;
+        }
+
+        .vc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .vc-text h3 {
+            font-size: 1.8rem;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .vc-text p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            text-align: justify;
+        }
+
+        .vc-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-left: 3px solid var(--primary-color);
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .vc-image {
+            position: relative;
+        }
+
+        .vc-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 0 30px rgba(0, 242, 234, 0.2);
+            transition: var(--transition);
+        }
+
+        .vc-image:hover img {
+            transform: scale(1.02);
+            box-shadow: 0 0 50px rgba(0, 242, 234, 0.4);
+        }
+
+        /* --- 2. CORE VALUES (HOÀNH TRÁNG) --- */
+        .core-values {
+            padding: 100px 20px;
+            background: #050505;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background animated circles */
+        .core-values::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(0,242,234,0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .values-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+            z-index: 2;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        /* Special highlight for the second card (center usually) */
+        .value-card:nth-child(2) {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(0,242,234,0.05));
+            border-color: rgba(0,242,234,0.3);
+            transform: translateY(-20px);
+        }
+
+        .value-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .value-card i {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: -webkit-linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .value-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .value-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        .value-bg-number {
+            position: absolute;
+            bottom: -20px;
+            right: -10px;
+            font-size: 8rem;
+            font-family: var(--font-tech);
+            color: rgba(255, 255, 255, 0.03);
+            font-weight: 800;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .value-card:hover .value-bg-number {
+            transform: translateY(-10px);
+            color: rgba(0, 242, 234, 0.1);
+        }
+
+        /* --- 3. TEACHERS (SLIDER) --- */
+        .teachers {
+            padding: var(--padding-section);
+            background: linear-gradient(180deg, #0a0b10 0%, #11131e 100%);
+        }
+
+        .slider-wrapper {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 30px; /* Hide scrollbar spacing if needed */
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .slider-track::-webkit-scrollbar {
+            display: none; /* Chrome/Safari */
+        }
+
+        .teacher-card {
+            flex: 0 0 300px;
+            scroll-snap-align: center;
+            background: #151722;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .teacher-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-10px);
+        }
+
+        .t-img-box {
+            height: 320px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .t-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .teacher-card:hover .t-img-box img {
+            transform: scale(1.1);
+        }
+
+        .t-info {
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: #151722;
+            margin-top: -40px; /* Overlap effect */
+            margin-left: 20px;
+            margin-right: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .t-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+
+        .t-info span {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-bottom: 10px;
+        }
+
+        /* Slider Controls */
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            backdrop-filter: blur(5px);
+            transition: var(--transition);
+        }
+
+        .slider-btn:hover {
+            background: var(--primary-color);
+            color: black;
+        }
+
+        .prev-btn { left: 10px; }
+        .next-btn { right: 10px; }
+
+        /* --- 4. TESTIMONIALS --- */
+        .testimonials {
+            padding: var(--padding-section);
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+        }
+
+        .testi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .testi-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px 20px 20px 0; /* Chat bubble style */
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .testi-card::before {
+            content: '\f10d'; /* FontAwesome Quote */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.1);
+        }
+
+        .testi-content {
+            font-style: italic;
+            color: #d1d1d1;
+            margin-bottom: 20px;
+        }
+
+        .testi-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .testi-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .testi-info h5 {
+            font-size: 1rem;
+            color: white;
+        }
+
+        .testi-info span {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        /* --- 5. FAQ (ACCORDION) --- */
+        .faq {
+            padding: var(--padding-section);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            background: #12141d;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .accordion-header:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .accordion-header h4 {
+            font-size: 1rem;
+            font-family: var(--font-main);
+            font-weight: 600;
+        }
+
+        .accordion-header i {
+            transition: transform 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 20px;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .accordion-body p {
+            padding: 20px 0;
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Active State for FAQ */
+        .accordion-item.active .accordion-header {
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .accordion-item.active .accordion-header i {
+            transform: rotate(180deg);
+        }
+
+        .accordion-item.active .accordion-body {
+            max-height: 200px; /* Adjust based on content */
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 50px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .vc-grid { grid-template-columns: 1fr; }
+            .section-title { font-size: 2rem; width: 100%; }
+            
+            /* Reset transform for mobile readability */
+            .value-card:nth-child(2) { transform: none; }
+            .value-card:hover { transform: scale(1.02); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="reveal">FUTURE <span class="highlight">TECH</span> ACADEMY</h1>
+            <p class="reveal">Nơi kiến tạo tương lai số của bạn</p>
+        </div>
+    </section>
+
+    <!-- 1. VISION & CULTURE -->
+    <section class="vision-culture" id="vision">
+        <div class="container">
+            <h2 class="section-title reveal">Tầm Nhìn & <span class="highlight">Văn Hoá</span></h2>
+            
+            <div class="vc-grid">
+                <div class="vc-text reveal">
+                    <div class="vc-card">
+                        <h3><i class="fas fa-eye"></i> Tầm Nhìn</h3>
+                        <p>Trở thành hệ sinh thái giáo dục công nghệ hàng đầu khu vực, nơi xóa nhòa khoảng cách giữa lý thuyết học thuật và thực tiễn doanh nghiệp. Chúng tôi không chỉ dạy Code, chúng tôi dạy cách tư duy để kiến tạo tương lai.</p>
+                    </div>
+                    <div class="vc-card">
+                        <h3><i class="fas fa-users"></i> Văn Hoá "Share & Shine"</h3>
+                        <p>Tại đây, kiến thức là để sẻ chia. Chúng tôi xây dựng môi trường cởi mở, nơi Mentor không giấu nghề và Học viên không ngại hỏi. Sai lầm được khuyến khích như một phần của sự trưởng thành.</p>
+                    </div>
+                </div>
+                <div class="vc-image reveal">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team working">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. CORE VALUES (HOÀNH TRÁNG) -->
+    <section class="core-values" id="values">
+        <div class="container">
+            <h2 class="section-title reveal"><span class="text-gradient">Giá Trị Cốt Lõi</span></h2>
+            
+            <div class="values-container">
+                <!-- Card 1 -->
+                <div class="value-card reveal">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Thực Chiến</h3>
+                    <p>Học là phải làm được. Chương trình giảng dạy loại bỏ 80% lý thuyết sáo rỗng, tập trung vào các dự án thực tế từ doanh nghiệp.</p>
+                    <span class="value-bg-number">01</span>
+                </div>
+
+                <!-- Card 2 (Center Highlight) -->
+                <div class="value-card reveal">
+                    <i class="fas fa-lightbulb"></i>
+                    <h3>Sáng Tạo</h3>
+                    <p>Công nghệ thay đổi từng giờ. Chúng tôi rèn luyện tư duy thích ứng và đổi mới sáng tạo thay vì học vẹt theo công thức cũ.</p>
+                    <span class="value-bg-number">02</span>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="value-card reveal">
+                    <i class="fas fa-heart"></i>
+                    <h3>Tận Tâm</h3>
+                    <p>Cam kết hỗ trợ học viên trọn đời. Ngay cả khi khóa học kết thúc, cộng đồng của chúng tôi vẫn luôn ở đó để hỗ trợ bạn.</p>
+                    <span class="value-bg-number">03</span>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="value-card reveal">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Chất Lượng</h3>
+                    <p>Quy trình kiểm soát chất lượng đầu ra nghiêm ngặt. Chỉ cấp chứng chỉ khi học viên thực sự làm chủ được công nghệ.</p>
+                    <span class="value-bg-number">04</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. TEACHERS INFO -->
+    <section class="teachers" id="teachers">
+        <div class="container">
+            <h2 class="section-title reveal">Đội Ngũ <span class="highlight">Chuyên Gia</span></h2>
+            
+            <div class="slider-wrapper reveal">
+                <button class="slider-btn prev-btn" id="t-prev"><i class="fas fa-chevron-left"></i></button>
+                <div class="slider-track" id="teacher-track">
+                    
+                    <!-- Teacher 1 -->
+                    <div class="teacher-card">
+                        <div class="t-img-box">
+                            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher">
+                        </div>
+                        <div class="t-info">
+                            <h4>Nguyễn Văn A</h4>
+                            <span>Senior Fullstack Dev</span>
+                            <div class="socials">
+                                <a href="#"><i class="fab fa-linkedin highlight"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teacher 2 -->
+                    <div class="teacher-card">
+                        <div class="t-img-box">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher">
+                        </div>
+                        <div class="t-info">
+                            <h4>Trần Thị B</h4>
+                            <span>AI Engineer Lead</span>
+                            <div class="socials">
+                                <a href="#"><i class="fab fa-linkedin highlight"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                     <!-- Teacher 3 -->
+                     <div class="teacher-card">
+                        <div class="t-img-box">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher">
+                        </div>
+                        <div class="t-info">
+                            <h4>Lê Hoàng C</h4>
+                            <span>Product Manager</span>
+                            <div class="socials">
+                                <a href="#"><i class="fab fa-linkedin highlight"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Teacher 4 -->
+                    <div class="teacher-card">
+                        <div class="t-img-box">
+                            <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Teacher">
+                        </div>
+                        <div class="t-info">
+                            <h4>Phạm Minh D</h4>
+                            <span>DevOps Specialist</span>
+                            <div class="socials">
+                                <a href="#"><i class="fab fa-linkedin highlight"></i></a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <button class="slider-btn next-btn" id="t-next"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. TESTIMONIALS -->
+    <section class="testimonials" id="feedback">
+        <div class="container">
+            <h2 class="section-title reveal">Học Viên <span class="highlight">Nói Gì?</span></h2>
+            
+            <div class="testi-grid">
+                <!-- Review 1 -->
+                <div class="testi-card reveal">
+                    <div class="testi-content">
+                        "Khóa học thực sự thay đổi tư duy của mình. Không chỉ là code, mình học được cách giải quyết vấn đề của một kỹ sư thực thụ."
+                    </div>
+                    <div class="testi-author">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="testi-avatar">
+                        <div class="testi-info">
+                            <h5>Hoàng Nam</h5>
+                            <span>Học viên khóa Front-end K12</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="testi-card reveal">
+                    <div class="testi-content">
+                        "Giảng viên cực kỳ nhiệt tình, support cả ngoài giờ học. Dự án cuối khóa giúp mình có portfolio đẹp để xin việc ngay lập tức."
+                    </div>
+                    <div class="testi-author">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Student" class="testi-avatar">
+                        <div class="testi-info">
+                            <h5>Minh Anh</h5>
+                            <span>Học viên khóa Data Science</span>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Review 3 -->
+                 <div class="testi-card reveal">
+                    <div class="testi-content">
+                        "Môi trường học tập rất hiện đại, các bạn cùng lớp đều giỏi và năng động. Cảm ơn trung tâm đã kết nối mình với công ty hiện tại."
+                    </div>
+                    <div class="testi-author">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" alt="Student" class="testi-avatar">
+                        <div class="testi-info">
+                            <h5>Tuấn Kiệt</h5>
+                            <span>Học viên khóa Fullstack</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FAQ -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <h2 class="section-title reveal">Câu Hỏi <span class="highlight">Thường Gặp</span></h2>
+            
+            <div class="faq-container reveal">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>Người mới bắt đầu (Zero-background) có học được không?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <p>Hoàn toàn được. Chúng tôi có lộ trình "Foundation" thiết kế riêng cho người mới, bắt đầu từ tư duy logic cơ bản nhất trước khi vào chuyên ngành.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>Trung tâm có cam kết việc làm sau khóa học không?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <p>Chúng tôi cam kết hỗ trợ kết nối việc làm trọn đời. Trung tâm có mạng lưới đối tác với hơn 50 công ty công nghệ. Nếu bạn hoàn thành tốt đồ án, việc làm sẽ tìm đến bạn.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>Thời gian học như thế nào, có linh hoạt không?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <p>Các lớp học thường diễn ra vào buổi tối (18h30 - 21h30) hoặc cuối tuần, phù hợp cho cả sinh viên và người đi làm.</p>
+                    </div>
+                </div>
+
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <h4>Học phí có được chia nhỏ để đóng không?</h4>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="accordion-body">
+                        <p>Có. Chúng tôi hỗ trợ trả góp 0% lãi suất và chia nhỏ học phí thành 2-3 đợt đóng để giảm áp lực tài chính cho học viên.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Future Tech Academy. All Rights Reserved.</p>
+        <p style="margin-top: 10px; opacity: 0.5; font-size: 0.8rem;">Designed for Educational Purpose</p>
+    </footer>
+
+    <script>
+        // --- 1. SCROLL REVEAL ANIMATION ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // --- 2. TEACHER SLIDER LOGIC ---
+        const track = document.getElementById('teacher-track');
+        const nextBtn = document.getElementById('t-next');
+        const prevBtn = document.getElementById('t-prev');
+
+        nextBtn.addEventListener('click', () => {
+            track.scrollBy({ left: 320, behavior: 'smooth' }); // 300px card + 20px gap
+        });
+
+        prevBtn.addEventListener('click', () => {
+            track.scrollBy({ left: -320, behavior: 'smooth' });
+        });
+
+        // --- 3. FAQ ACCORDION LOGIC ---
+        const accordions = document.querySelectorAll('.accordion-item');
+
+        accordions.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            
+            header.addEventListener('click', () => {
+                // Close other open items (optional - single open mode)
+                accordions.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+
+                // Toggle current
+                item.classList.toggle('active');
+            });
+        });
+
+    </script>
+</body>
+</html>

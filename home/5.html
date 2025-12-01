@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullHouse Dev - Future of Coding</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        primary: '#F97316', // Orange
+                        dark: '#0B1120', // Deep Blue Black
+                        surface: '#1E293B', // Slate 800
+                        neonBlue: '#0EA5E9',
+                        neonPurple: '#A855F7',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body {
+            background-color: #0B1120;
+            color: #E2E8F0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0B1120;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F97316;
+        }
+
+        /* Tech Grid Background Effect */
+        .tech-grid {
+            background-size: 50px 50px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 100%);
+        }
+
+        /* Glassmorphism */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.4);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Glowing Hover Effect */
+        .glow-hover {
+            transition: all 0.3s ease;
+        }
+        .glow-hover:hover {
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+            border-color: rgba(249, 115, 22, 0.5);
+            transform: translateY(-5px);
+        }
+
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Hide Scrollbar util */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Accordion transition */
+        .accordion-content { transition: all 0.3s ease-in-out; max-height: 0; opacity: 0; overflow: hidden; }
+        .accordion-content.active { opacity: 1; }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 glass-card border-b border-white/5 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="relative w-10 h-10 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-primary rounded-lg blur opacity-50 group-hover:opacity-100 transition duration-300"></div>
+                    <div class="relative w-full h-full bg-slate-900 border border-primary/50 rounded-lg flex items-center justify-center text-primary font-bold text-xl">F</div>
+                </div>
+                <span class="text-2xl font-bold text-white tracking-tight">FullHouse<span class="text-primary">Dev</span></span>
+            </a>
+            
+            <div class="hidden md:flex space-x-8 text-sm font-semibold uppercase tracking-wider text-slate-300">
+                <a href="#vision" class="hover:text-primary transition-colors">Về chúng tôi</a>
+                <a href="#values" class="hover:text-primary transition-colors">Giá trị</a>
+                <a href="#mentors" class="hover:text-primary transition-colors">Giảng viên</a>
+                <a href="#reviews" class="hover:text-primary transition-colors">Học viên</a>
+                <a href="#faq" class="hover:text-primary transition-colors">Hỏi đáp</a>
+            </div>
+
+            <button class="hidden md:block bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-400 text-white px-6 py-2.5 rounded-full font-bold shadow-[0_0_15px_rgba(249,115,22,0.5)] transition hover:scale-105 active:scale-95">
+                Đăng Ký Ngay
+            </button>
+
+            <!-- Mobile Menu Btn -->
+            <button class="md:hidden text-2xl text-white" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-t border-white/10 p-4 absolute w-full shadow-2xl">
+            <a href="#vision" class="block py-3 text-slate-300 hover:text-primary border-b border-white/5">Về chúng tôi</a>
+            <a href="#values" class="block py-3 text-slate-300 hover:text-primary border-b border-white/5">Giá trị cốt lõi</a>
+            <a href="#mentors" class="block py-3 text-slate-300 hover:text-primary border-b border-white/5">Giảng viên</a>
+            <a href="#reviews" class="block py-3 text-slate-300 hover:text-primary">Hỏi đáp</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden min-h-screen flex items-center">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 bg-dark z-0">
+            <div class="absolute inset-0 tech-grid opacity-30"></div>
+            <!-- Orb Glows -->
+            <div class="absolute top-20 left-20 w-72 h-72 bg-blue-600/20 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-20 right-20 w-96 h-96 bg-primary/20 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-white/10 text-primary text-xs font-mono mb-6 backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    <span>NEW BATCH OPENING: DEC 2025</span>
+                </div>
+                
+                <h1 class="text-5xl lg:text-7xl font-bold text-white leading-tight mb-6">
+                    Master The Code.<br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 typing-cursor" id="typing-text"></span>
+                </h1>
+                
+                <p class="text-slate-400 text-lg mb-8 max-w-lg">
+                    Hệ thống đào tạo lập trình thực chiến. Chúng tôi biến những dòng code khô khan thành sự nghiệp vững chắc của bạn trong kỷ nguyên số.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="bg-primary hover:bg-orange-500 text-white px-8 py-4 rounded-lg font-bold text-lg transition shadow-[0_0_20px_rgba(249,115,22,0.4)] flex items-center justify-center gap-2 group">
+                        <span>Khám phá lộ trình</span>
+                        <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                    <button class="bg-slate-800 hover:bg-slate-700 text-white border border-white/10 px-8 py-4 rounded-lg font-bold text-lg transition flex items-center justify-center gap-2 backdrop-blur-md">
+                        <i class="fas fa-play text-primary"></i>
+                        <span>Video Intro</span>
+                    </button>
+                </div>
+                
+                <div class="mt-12 flex items-center gap-4 text-sm text-slate-500 font-mono">
+                    <span>TRUSTED BY:</span>
+                    <div class="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                        <i class="fab fa-google text-xl"></i>
+                        <i class="fab fa-aws text-xl"></i>
+                        <i class="fab fa-react text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative hidden lg:block">
+                <!-- Code Window Illustration -->
+                <div class="relative z-10 glass-card rounded-xl p-1 border border-white/10 shadow-2xl animate-float">
+                    <div class="bg-slate-900 rounded-lg p-6 font-mono text-sm overflow-hidden">
+                        <div class="flex gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <div class="text-slate-300">
+                            <span class="text-purple-400">const</span> <span class="text-blue-400">student</span> = {<br>
+                            &nbsp;&nbsp;name: <span class="text-green-400">"Future Developer"</span>,<br>
+                            &nbsp;&nbsp;skills: [<span class="text-green-400">"React"</span>, <span class="text-green-400">"NodeJS"</span>, <span class="text-green-400">"AWS"</span>],<br>
+                            &nbsp;&nbsp;status: <span class="text-orange-400">"Ready_To_Hire"</span><br>
+                            };<br><br>
+                            <span class="text-purple-400">function</span> <span class="text-blue-400">changeLife</span>() {<br>
+                            &nbsp;&nbsp;<span class="text-purple-400">return</span> FullHouse.join();<br>
+                            }
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Decor Elements -->
+                <div class="absolute -top-10 -right-10 w-24 h-24 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl blur-lg opacity-60 animate-spin-slow"></div>
+                <div class="absolute -bottom-5 -left-5 w-20 h-20 bg-primary rounded-full blur-xl opacity-40 animate-pulse-slow"></div>
+            </div>
+        </div>
+    </header>
+
+    <!-- VISION SECTION -->
+    <section id="vision" class="py-24 relative bg-slate-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Image Side with Cyber Frame -->
+                <div class="lg:w-1/2 relative group">
+                    <div class="absolute inset-0 bg-primary transform translate-x-4 translate-y-4 rounded-2xl opacity-20 group-hover:translate-x-2 group-hover:translate-y-2 transition duration-500"></div>
+                    <div class="absolute inset-0 border-2 border-primary/30 transform -translate-x-4 -translate-y-4 rounded-2xl group-hover:translate-x-0 group-hover:translate-y-0 transition duration-500"></div>
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="FullHouse Team" class="w-full object-cover h-[400px] hover:scale-110 transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl font-bold text-white">FullHouse <span class="text-primary">Culture</span></h3>
+                            <p class="text-slate-300">Code with passion. Live with purpose.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Text Side -->
+                <div class="lg:w-1/2">
+                    <h4 class="text-primary font-mono text-sm tracking-widest mb-2">/// WHO WE ARE</h4>
+                    <h2 class="text-4xl font-bold text-white mb-6">Không Chỉ Là Trung Tâm.<br>Đây Là <span class="text-primary">Ngôi Nhà Công Nghệ</span>.</h2>
+                    <p class="text-slate-400 mb-8 text-lg leading-relaxed">
+                        Lập trình không phải là những dòng mã vô tri. Tại FullHouse Dev, chúng tôi định nghĩa lập trình là nghệ thuật giải quyết vấn đề. Môi trường tại đây mô phỏng 100% doanh nghiệp thực tế, nơi bạn được phép sai để trưởng thành và được hỗ trợ như một gia đình.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="bg-surface p-4 rounded-xl border border-white/5 hover:border-primary/50 transition duration-300">
+                            <i class="fas fa-rocket text-3xl text-primary mb-3"></i>
+                            <h4 class="font-bold text-white mb-1">Tầm Nhìn</h4>
+                            <p class="text-sm text-slate-400">Bệ phóng nhân sự IT chất lượng cao.</p>
+                        </div>
+                        <div class="bg-surface p-4 rounded-xl border border-white/5 hover:border-blue-500/50 transition duration-300">
+                            <i class="fas fa-users text-3xl text-blue-500 mb-3"></i>
+                            <h4 class="font-bold text-white mb-1">Văn Hoá</h4>
+                            <p class="text-sm text-slate-400">Sẻ chia - Kỷ luật - Tự do.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CORE VALUES - NEW LAYOUT (Bento Grid / Holographic) -->
+    <section id="values" class="py-24 bg-dark relative overflow-hidden">
+        <!-- Circuit Background -->
+        <svg class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+            <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                <path d="M10,10 L90,10 M90,10 L90,90 M90,90 L10,90 M10,90 L10,10" fill="none" stroke="white" stroke-width="0.5"/>
+                <circle cx="10" cy="10" r="2" fill="white"/>
+                <circle cx="90" cy="90" r="2" fill="white"/>
+            </pattern>
+            <rect width="100%" height="100%" fill="url(#circuit)"/>
+        </svg>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <span class="text-primary font-mono text-sm tracking-widest border border-primary/30 px-4 py-1 rounded-full">/// CORE_VALUES.exe</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-4 mb-4">DNA Của FullHouse Dev</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-transparent via-primary to-transparent mx-auto"></div>
+            </div>
+
+            <!-- Complex Grid Layout -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 max-w-6xl mx-auto">
+                
+                <!-- Main Value 1: Large Left Block -->
+                <div class="md:col-span-7 glass-card rounded-3xl p-8 md:p-12 relative overflow-hidden group hover:border-orange-500/50 transition-all duration-500">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 group-hover:bg-primary/20 transition-all"></div>
+                    <div class="relative z-10">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center text-white text-3xl shadow-lg mb-6 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Thực Chiến <span class="text-primary">(Practical)</span></h3>
+                        <p class="text-slate-400 text-lg leading-relaxed mb-6">
+                            Nói không với "Tiến sĩ giấy". Tại đây, 80% thời lượng là viết code. Bạn sẽ tham gia vào quy trình Scrum/Agile, sử dụng Git, Docker, CI/CD như một kỹ sư phần mềm thực thụ tại doanh nghiệp.
+                        </p>
+                        <div class="flex gap-2">
+                            <span class="px-3 py-1 bg-white/5 rounded text-xs text-orange-400 font-mono border border-white/5">#LiveProjects</span>
+                            <span class="px-3 py-1 bg-white/5 rounded text-xs text-orange-400 font-mono border border-white/5">#NoTheory</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Value 2: Right Top Block -->
+                <div class="md:col-span-5 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-blue-500/50 transition-all duration-500 flex flex-col justify-center">
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-blue-500/10 rounded-full blur-[50px] group-hover:bg-blue-500/20 transition-all"></div>
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-heart-pulse"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Tận Tâm <span class="text-blue-400">(Dedication)</span></h3>
+                    <p class="text-slate-400 text-sm mb-4">
+                        Giảng viên support 24/7. Chúng tôi cam kết đồng hành đến khi bạn có offer đầu tiên.
+                    </p>
+                    <a href="#" class="text-blue-400 text-sm font-bold hover:text-blue-300 inline-flex items-center gap-1">
+                        Xem chính sách hỗ trợ <i class="fas fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Value 3: Right Bottom Block -->
+                <div class="md:col-span-5 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-green-500/50 transition-all duration-500 flex flex-col justify-center">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                     <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center text-white text-2xl shadow-lg mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Sáng Tạo <span class="text-green-400">(Innovation)</span></h3>
+                    <p class="text-slate-400 text-sm">
+                        Code không chỉ chạy được, mà phải Clean & Optimized. Tư duy giải quyết vấn đề mới là vua.
+                    </p>
+                </div>
+
+                <!-- Stat Block (Visual Filler) -->
+                <div class="md:col-span-7 grid grid-cols-3 gap-4">
+                    <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center hover:bg-white/5 transition">
+                        <span class="text-3xl font-bold text-white">5K+</span>
+                        <span class="text-xs text-slate-400 uppercase">Học viên</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center hover:bg-white/5 transition">
+                        <span class="text-3xl font-bold text-white">98%</span>
+                        <span class="text-xs text-slate-400 uppercase">Có việc làm</span>
+                    </div>
+                    <div class="glass-card rounded-2xl p-4 flex flex-col items-center justify-center hover:bg-white/5 transition">
+                        <span class="text-3xl font-bold text-white">50+</span>
+                        <span class="text-xs text-slate-400 uppercase">Đối tác</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENTORS SLIDER -->
+    <section id="mentors" class="py-24 bg-surface relative">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div>
+                    <h4 class="text-primary font-mono text-sm tracking-widest mb-2">/// EXPERTS</h4>
+                    <h2 class="text-4xl font-bold text-white">Đội Ngũ Mentor</h2>
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="scrollSlider('mentor-slider', 'left')" class="w-10 h-10 rounded-lg bg-dark border border-white/10 text-white hover:border-primary hover:text-primary transition flex items-center justify-center">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button onclick="scrollSlider('mentor-slider', 'right')" class="w-10 h-10 rounded-lg bg-dark border border-white/10 text-white hover:border-primary hover:text-primary transition flex items-center justify-center">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mentor-slider" class="flex overflow-x-auto gap-6 hide-scrollbar snap-x snap-mandatory pb-4">
+                <!-- Mentor 1 -->
+                <div class="min-w-[300px] bg-dark rounded-xl overflow-hidden snap-start border border-white/5 group hover:border-primary/50 transition duration-300">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-primary text-white text-xs px-2 py-1 rounded font-bold">Fullstack Lead</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white">Nguyễn Văn A</h3>
+                        <p class="text-slate-400 text-sm mb-4">Senior Developer @Google</p>
+                        <div class="flex gap-2">
+                            <i class="fab fa-js text-yellow-400"></i>
+                            <i class="fab fa-react text-blue-400"></i>
+                            <i class="fab fa-node text-green-500"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mentor 2 -->
+                <div class="min-w-[300px] bg-dark rounded-xl overflow-hidden snap-start border border-white/5 group hover:border-blue-500/50 transition duration-300">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded font-bold">AI Expert</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white">Trần Thị B</h3>
+                        <p class="text-slate-400 text-sm mb-4">Data Scientist @Shopee</p>
+                        <div class="flex gap-2">
+                            <i class="fab fa-python text-blue-300"></i>
+                            <i class="fas fa-brain text-pink-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mentor 3 -->
+                <div class="min-w-[300px] bg-dark rounded-xl overflow-hidden snap-start border border-white/5 group hover:border-green-500/50 transition duration-300">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-green-600 text-white text-xs px-2 py-1 rounded font-bold">DevOps</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white">Lê Văn C</h3>
+                        <p class="text-slate-400 text-sm mb-4">Solution Arch @FPT</p>
+                        <div class="flex gap-2">
+                            <i class="fab fa-aws text-orange-400"></i>
+                            <i class="fab fa-docker text-blue-500"></i>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Mentor 4 -->
+                 <div class="min-w-[300px] bg-dark rounded-xl overflow-hidden snap-start border border-white/5 group hover:border-purple-500/50 transition duration-300">
+                    <div class="h-64 overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover group-hover:scale-110 transition duration-500 grayscale group-hover:grayscale-0">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-purple-600 text-white text-xs px-2 py-1 rounded font-bold">Mobile</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white">Phạm Văn D</h3>
+                        <p class="text-slate-400 text-sm mb-4">Mobile Lead @Grab</p>
+                        <div class="flex gap-2">
+                            <i class="fab fa-flutter text-blue-400"></i>
+                            <i class="fab fa-apple text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section id="reviews" class="py-24 bg-dark relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-white text-center mb-16">Học Viên Nói Gì?</h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Review 1 -->
+                <div class="glass-card p-8 rounded-2xl relative">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-white/5"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full border-2 border-primary">
+                        <div>
+                            <h5 class="font-bold text-white">Hoàng Minh</h5>
+                            <p class="text-xs text-primary">Frontend Dev @VNG</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 italic">"Giao diện học tập xịn xò, Mentor hỗ trợ siêu nhanh. Mình từ dân xây dựng chuyển qua mà giờ code React nhoay nhoáy."</p>
+                    <div class="flex gap-1 text-yellow-500 text-xs mt-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="glass-card p-8 rounded-2xl relative">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-white/5"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full border-2 border-blue-500">
+                        <div>
+                            <h5 class="font-bold text-white">Lan Hương</h5>
+                            <p class="text-xs text-blue-400">Java Dev @Viettel</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 italic">"Ấn tượng nhất là các dự án thực tế. Không phải code mấy bài toán vô nghĩa, mà làm ra sản phẩm chạy thật luôn."</p>
+                     <div class="flex gap-1 text-yellow-500 text-xs mt-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="glass-card p-8 rounded-2xl relative">
+                    <i class="fas fa-quote-right absolute top-6 right-6 text-4xl text-white/5"></i>
+                    <div class="flex items-center gap-4 mb-6">
+                        <img src="https://randomuser.me/api/portraits/men/86.jpg" class="w-12 h-12 rounded-full border-2 border-green-500">
+                        <div>
+                            <h5 class="font-bold text-white">Tuấn Anh</h5>
+                            <p class="text-xs text-green-400">Freelancer</p>
+                        </div>
+                    </div>
+                    <p class="text-slate-400 italic">"Học phí quá hời so với chất lượng. Môi trường anh em hỗ trợ nhau rất vui, không bị áp lực."</p>
+                     <div class="flex gap-1 text-yellow-500 text-xs mt-4">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-24 bg-surface">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <h2 class="text-3xl font-bold text-white text-center mb-12">Câu Hỏi Thường Gặp</h2>
+            
+            <div class="space-y-4">
+                <div class="bg-dark border border-white/5 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center text-white hover:text-primary transition" onclick="toggleFAQ(this)">
+                        <span class="font-medium">Người trái ngành (Non-IT) có học được không?</span>
+                        <i class="fas fa-plus text-sm"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-900/50 px-6 text-slate-400 text-sm">
+                        <div class="py-4 border-t border-white/5">
+                            Hoàn toàn được! Lộ trình được thiết kế từ Zero đến Hero. 40% học viên của chúng tôi là trái ngành và hiện đang làm việc rất tốt.
+                        </div>
+                    </div>
+                </div>
+                <!-- More FAQ Items as needed, keeping style consistent -->
+                 <div class="bg-dark border border-white/5 rounded-lg overflow-hidden">
+                    <button class="w-full px-6 py-4 text-left flex justify-between items-center text-white hover:text-primary transition" onclick="toggleFAQ(this)">
+                        <span class="font-medium">Cam kết đầu ra như thế nào?</span>
+                        <i class="fas fa-plus text-sm"></i>
+                    </button>
+                    <div class="accordion-content bg-slate-900/50 px-6 text-slate-400 text-sm">
+                        <div class="py-4 border-t border-white/5">
+                            Chúng tôi ký hợp đồng cam kết hỗ trợ việc làm. Hoàn lại học phí nếu đào tạo không đúng cam kết.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-slate-400 py-12 border-t border-white/10">
+        <div class="container mx-auto px-6 text-center md:text-left grid md:grid-cols-4 gap-8">
+            <div class="md:col-span-1">
+                <span class="text-2xl font-bold text-white tracking-tight">FullHouse<span class="text-primary">Dev</span></span>
+                <p class="mt-4 text-sm">Coding the future, one line at a time.</p>
+            </div>
+            <!-- Footer Links... -->
+        </div>
+        <div class="text-center mt-12 pt-8 border-t border-white/10 text-xs font-mono">
+            &copy; 2025 FullHouse Dev. All systems operational.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Typing Effect
+        const words = ["Sự Nghiệp Vững Chắc", "Tương Lai Công Nghệ", "Thu Nhập Đột Phá"];
+        let i = 0;
+        let timer;
+
+        function typeWriter() {
+            const heading = document.getElementById('typing-text');
+            const word = words[i];
+            let j = 0;
+            let isDeleting = false;
+
+            function loop() {
+                heading.innerHTML = word.substring(0, j);
+                
+                if (isDeleting) {
+                    j--;
+                } else {
+                    j++;
+                }
+
+                if (!isDeleting && j === word.length) {
+                    isDeleting = true;
+                    setTimeout(loop, 2000); // Pause at end
+                } else if (isDeleting && j === 0) {
+                    isDeleting = false;
+                    i = (i + 1) % words.length;
+                    setTimeout(typeWriter, 500); // Pause before next word
+                } else {
+                    setTimeout(loop, isDeleting ? 50 : 100);
+                }
+            }
+            loop();
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter();
+        });
+
+        // Navbar Scroll glass effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-slate-900/90', 'shadow-lg');
+            } else {
+                nav.classList.remove('bg-slate-900/90', 'shadow-lg');
+            }
+        });
+
+        // Horizontal Scroll
+        function scrollSlider(id, direction) {
+            const container = document.getElementById(id);
+            const scrollAmount = 320; 
+            container.scrollBy({ left: direction === 'left' ? -scrollAmount : scrollAmount, behavior: 'smooth' });
+        }
+
+        // FAQ Toggle
+        function toggleFAQ(btn) {
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector('i');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                content.style.maxHeight = '0px';
+                icon.classList.replace('fa-minus', 'fa-plus');
+            } else {
+                // Close others
+                document.querySelectorAll('.accordion-content').forEach(el => {
+                    el.classList.remove('active');
+                    el.style.maxHeight = '0px';
+                });
+                document.querySelectorAll('.fa-minus').forEach(el => el.classList.replace('fa-minus', 'fa-plus'));
+
+                content.classList.add('active');
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.classList.replace('fa-plus', 'fa-minus');
+            }
+        }
+    </script>
+</body>
+</html>

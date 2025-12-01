@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullHouse Dev - Khởi đầu sự nghiệp Lập trình viên</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9', // Sky blue
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                            dark: '#0f172a', // Slate 900
+                            darker: '#020617', // Slate 950
+                            accent: '#8b5cf6', // Violet
+                            neon: '#38bdf8',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'blob': 'blob 7s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        blob: {
+                            '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                            '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                            '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                            '100%': { transform: 'translate(0px, 0px) scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #38bdf8;
+            border-radius: 4px;
+        }
+
+        .hide-scroll-bar::-webkit-scrollbar { display: none; }
+        .hide-scroll-bar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Utility Classes */
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+        }
+
+        /* Grid Background Pattern */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* Typing Cursor */
+        .typing-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Tilt Card Effect */
+        .tilt-card {
+            transition: transform 0.1s;
+            transform-style: preserve-3d;
+        }
+        .tilt-content {
+            transform: translateZ(20px);
+        }
+
+        /* Reveal Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-300 bg-brand-darker selection:bg-brand-500 selection:text-white overflow-x-hidden">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 glass-nav transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white flex items-center gap-2 group">
+                <div class="w-8 h-8 bg-brand-500 rounded flex items-center justify-center text-white group-hover:rotate-12 transition-transform">
+                    <i class="fa-solid fa-code"></i>
+                </div>
+                <span class="tracking-tight">FullHouse<span class="text-brand-500">Dev</span></span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 items-center font-medium text-sm">
+                <a href="#ve-chung-toi" class="text-gray-300 hover:text-white hover:text-glow transition">Về chúng tôi</a>
+                <a href="#gia-tri" class="text-gray-300 hover:text-white hover:text-glow transition">Giá trị</a>
+                <a href="#giang-vien" class="text-gray-300 hover:text-white hover:text-glow transition">Giảng viên</a>
+                <a href="#hoc-vien" class="text-gray-300 hover:text-white hover:text-glow transition">Cảm nhận</a>
+                <a href="#" class="bg-gradient-to-r from-brand-600 to-brand-accent text-white px-6 py-2.5 rounded-full hover:shadow-[0_0_20px_rgba(56,189,248,0.5)] transition-all transform hover:-translate-y-0.5 font-bold text-xs uppercase tracking-wider">Đăng ký ngay</a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                <i class="fa-solid fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-b border-gray-800 p-4 flex-col space-y-4">
+            <a href="#ve-chung-toi" class="block text-gray-300">Về chúng tôi</a>
+            <a href="#gia-tri" class="block text-gray-300">Giá trị cốt lõi</a>
+            <a href="#giang-vien" class="block text-gray-300">Đội ngũ giảng viên</a>
+            <a href="#" class="block text-center bg-brand-600 text-white py-2 rounded-lg">Đăng ký tư vấn</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION (TECH THEME) -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-darker pt-20">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 bg-grid opacity-20"></div>
+        <div class="absolute top-0 -left-4 w-72 h-72 bg-brand-500 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div class="absolute top-0 -right-4 w-72 h-72 bg-brand-accent rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+
+        <div class="container mx-auto px-6 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            
+            <!-- Text Content -->
+            <div class="text-left reveal active">
+                <div class="inline-block px-3 py-1 mb-4 text-xs font-mono text-brand-neon bg-brand-900/50 rounded-full border border-brand-500/30">
+                    <i class="fa-solid fa-terminal mr-2"></i> > hello_world.init()
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-6">
+                    Biến Đam Mê <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-neon to-brand-accent typing-cursor" id="typing-text"></span>
+                </h1>
+                <p class="text-lg text-gray-400 mb-8 max-w-lg leading-relaxed">
+                    FullHouse Dev không chỉ dạy code. Chúng tôi đào tạo kỹ sư phần mềm thực chiến với tư duy sản phẩm và kỹ năng giải quyết vấn đề.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="px-8 py-4 bg-white text-brand-darker font-bold rounded-lg hover:bg-gray-100 transition shadow-[0_0_20px_rgba(255,255,255,0.3)] flex items-center justify-center gap-2">
+                        <span>Xem Lộ Trình</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="px-8 py-4 bg-transparent border border-gray-600 text-white font-bold rounded-lg hover:border-brand-500 hover:text-brand-neon transition flex items-center justify-center gap-2 group">
+                        <i class="fa-brands fa-github text-xl group-hover:rotate-12 transition"></i>
+                        <span>Xem Dự Án Học Viên</span>
+                    </button>
+                </div>
+                
+                <!-- Trust Badges -->
+                <div class="mt-12 flex items-center gap-6 text-gray-500 text-sm font-mono">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check text-brand-neon"></i> 2000+ Students
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-check text-brand-neon"></i> 95% Hired
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hero Visual (Abstract Code Block) -->
+            <div class="relative hidden lg:block reveal active delay-200">
+                <div class="relative w-full aspect-square max-w-lg mx-auto animate-float">
+                    <!-- Glass Panel Main -->
+                    <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-xl rounded-2xl border border-gray-700 shadow-2xl p-6 flex flex-col transform rotate-3 hover:rotate-0 transition duration-500">
+                        <!-- Code Header -->
+                        <div class="flex items-center gap-2 mb-4">
+                            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                        </div>
+                        <!-- Code Body -->
+                        <div class="font-mono text-sm space-y-2 overflow-hidden">
+                            <div class="text-gray-500">// Your Future Starts Here</div>
+                            <div class="text-purple-400">const <span class="text-yellow-300">dreamJob</span> = <span class="text-blue-400">await</span> fullHouse.<span class="text-blue-300">train</span>({</div>
+                            <div class="pl-4 text-white">passion: <span class="text-green-400">true</span>,</div>
+                            <div class="pl-4 text-white">effort: <span class="text-orange-400">100%</span>,</div>
+                            <div class="pl-4 text-white">mentor: <span class="text-brand-neon">'Dedicated'</span></div>
+                            <div class="text-purple-400">});</div>
+                            <div class="text-gray-500 pt-2">// Output: Success</div>
+                            <div class="text-green-400">console.log(<span class="text-yellow-300">dreamJob</span>.offerLetter);</div>
+                        </div>
+                        
+                        <!-- Floating Element -->
+                        <div class="absolute -right-10 -bottom-10 bg-brand-600 p-4 rounded-xl shadow-lg animate-pulse-slow">
+                            <i class="fa-brands fa-react text-4xl text-white spin-slow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- STORY TELLING SECTION -->
+    <section id="ve-chung-toi" class="py-24 bg-brand-dark relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <div class="lg:w-1/2 relative reveal">
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-500 to-purple-600 rounded-2xl blur-lg opacity-30"></div>
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Team" class="relative rounded-2xl shadow-2xl border border-gray-700 grayscale hover:grayscale-0 transition duration-500">
+                </div>
+                <div class="lg:w-1/2 reveal">
+                    <h2 class="text-brand-neon font-mono text-sm mb-2"># ABOUT_US</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6">Không Chỉ Là Code, <br>Đó Là Văn Hóa</h3>
+                    <p class="text-gray-400 mb-6 leading-relaxed">
+                        Tại FullHouse Dev, chúng tôi tin rằng lập trình viên giỏi không được sinh ra, họ được tôi luyện. Môi trường tại đây mô phỏng chính xác những gì diễn ra tại các công ty công nghệ lớn: 
+                        <span class="text-white font-bold">Daily Scrum, Code Review, CI/CD pipelines.</span>
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="border-l-2 border-brand-500 pl-4">
+                            <h4 class="text-white font-bold text-lg">Mentor 1:1</h4>
+                            <p class="text-sm text-gray-500 mt-1">Review từng dòng code, sửa tư duy sai.</p>
+                        </div>
+                        <div class="border-l-2 border-brand-accent pl-4">
+                            <h4 class="text-white font-bold text-lg">Project-Based</h4>
+                            <p class="text-sm text-gray-500 mt-1">Học qua dự án thật, deploy thật.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: GIÁ TRỊ CỐT LÕI (REVAMPED - GRAND & TECH) -->
+    <section id="gia-tri" class="py-32 bg-black relative overflow-hidden">
+        <!-- Background Abstract Lines -->
+        <div class="absolute inset-0 opacity-20">
+            <svg width="100%" height="100%">
+                <pattern id="circuit" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+                    <path d="M10 10 L90 10 L90 90 L10 90 Z" fill="none" stroke="#38bdf8" stroke-width="0.5"/>
+                    <circle cx="10" cy="10" r="2" fill="#38bdf8"/>
+                </pattern>
+                <rect width="100%" height="100%" fill="url(#circuit)"/>
+            </svg>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <span class="px-4 py-1 rounded-full border border-brand-500 text-brand-500 text-xs font-mono uppercase tracking-widest bg-brand-900/20">Core Values</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-white mt-6 text-glow">DNA Của FullHouse Dev</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">3 trụ cột công nghệ giúp chúng tôi định hình tư duy của hàng nghìn lập trình viên.</p>
+            </div>
+
+            <!-- 3D CARDS LAYOUT -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 perspective-1000">
+                
+                <!-- Card 1 -->
+                <div class="tilt-card group relative h-96 cursor-pointer reveal delay-100">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-900/80 to-black rounded-2xl border border-brand-500/30 group-hover:border-brand-neon/80 transition duration-500 shadow-lg group-hover:shadow-[0_0_30px_rgba(56,189,248,0.3)]"></div>
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10 rounded-2xl"></div>
+                    
+                    <div class="relative h-full p-8 flex flex-col justify-between tilt-content z-20">
+                        <div>
+                            <div class="w-16 h-16 bg-brand-500/10 rounded-xl flex items-center justify-center border border-brand-500/50 mb-6 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-fire text-3xl text-brand-neon"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-brand-neon transition">Thực Chiến</h3>
+                            <div class="h-1 w-12 bg-brand-500 rounded mb-4"></div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                "Talk is cheap. Show me the code." <br>
+                                Tại đây, bạn sẽ code đến khi ngón tay mỏi nhừ. Bug, Deploy, Crash, Fix - đó là quy trình hàng ngày.
+                            </p>
+                        </div>
+                        <div class="flex items-center text-brand-500 text-sm font-mono opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-4 group-hover:translate-y-0">
+                            <span>Learn more</span> <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 (Center Highlight) -->
+                <div class="tilt-card group relative h-96 cursor-pointer reveal delay-200 md:-mt-8">
+                    <div class="absolute inset-0 bg-gradient-to-b from-brand-accent/20 to-black rounded-2xl border border-brand-accent/50 group-hover:border-brand-accent transition duration-500 shadow-lg group-hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]"></div>
+                    
+                    <div class="relative h-full p-8 flex flex-col justify-between tilt-content z-20">
+                        <div>
+                            <div class="w-16 h-16 bg-brand-accent/10 rounded-xl flex items-center justify-center border border-brand-accent/50 mb-6 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-heart text-3xl text-brand-accent"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-brand-accent transition">Tận Tâm</h3>
+                            <div class="h-1 w-12 bg-brand-accent rounded mb-4"></div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Chúng tôi không bỏ rơi học viên. Sự thành công của bạn là KPI của chúng tôi. Mentor sẵn sàng support 24/7, kể cả cuối tuần.
+                            </p>
+                        </div>
+                        <div class="absolute top-4 right-4 animate-pulse">
+                            <span class="inline-flex rounded-full h-3 w-3 bg-brand-accent"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="tilt-card group relative h-96 cursor-pointer reveal delay-300">
+                    <div class="absolute inset-0 bg-gradient-to-b from-green-900/80 to-black rounded-2xl border border-green-500/30 group-hover:border-green-400/80 transition duration-500 shadow-lg group-hover:shadow-[0_0_30px_rgba(74,222,128,0.3)]"></div>
+                    
+                    <div class="relative h-full p-8 flex flex-col justify-between tilt-content z-20">
+                        <div>
+                            <div class="w-16 h-16 bg-green-500/10 rounded-xl flex items-center justify-center border border-green-500/50 mb-6 group-hover:scale-110 transition duration-300">
+                                <i class="fa-solid fa-layer-group text-3xl text-green-400"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold text-white mb-2 group-hover:text-green-400 transition">Cập Nhật</h3>
+                            <div class="h-1 w-12 bg-green-500 rounded mb-4"></div>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Công nghệ thay đổi chóng mặt. Giáo trình được update liên tục: NextJS 14, Docker, AI Integration để bạn luôn dẫn đầu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: GIẢNG VIÊN (Light & Clean for contrast) -->
+    <section id="giang-vien" class="py-24 bg-brand-50">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12 reveal">
+                <div>
+                    <span class="text-brand-600 font-bold uppercase tracking-wider text-sm">Mentors</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mt-2">Đội Ngũ "Quái Kiệt"</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="scrollContainer('mentors-slider', -1)" class="w-10 h-10 rounded-full bg-white text-gray-800 shadow-md hover:bg-brand-600 hover:text-white transition flex items-center justify-center">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="scrollContainer('mentors-slider', 1)" class="w-10 h-10 rounded-full bg-white text-gray-800 shadow-md hover:bg-brand-600 hover:text-white transition flex items-center justify-center">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mentors-slider" class="flex overflow-x-auto hide-scroll-bar snap-x snap-mandatory gap-6 pb-8 scroll-smooth reveal">
+                 <!-- Mentor Cards (Keep existing structure but improve shadow) -->
+                 <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-xl overflow-hidden snap-center group hover:-translate-y-2 transition duration-300">
+                    <div class="h-72 relative overflow-hidden">
+                         <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mentor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                         <div class="absolute bottom-4 left-4">
+                             <h3 class="text-white text-xl font-bold">Nguyễn Văn A</h3>
+                             <p class="text-brand-neon text-sm font-mono">Senior Fullstack</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"10 năm kinh nghiệm tại FPT & VinGroup. 'Code sạch' là tôn chỉ."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">Java</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">Microservices</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Duplicate cards for demo -->
+                <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-xl overflow-hidden snap-center group hover:-translate-y-2 transition duration-300">
+                    <div class="h-72 relative overflow-hidden">
+                         <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mentor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                         <div class="absolute bottom-4 left-4">
+                             <h3 class="text-white text-xl font-bold">Trần Thị B</h3>
+                             <p class="text-brand-neon text-sm font-mono">Frontend Lead</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"Cựu kỹ sư Shopee. Đam mê tối ưu UX/UI đến từng pixel."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">React</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">NextJS</span>
+                        </div>
+                    </div>
+                </div>
+                 <div class="min-w-[300px] md:min-w-[350px] bg-white rounded-2xl shadow-xl overflow-hidden snap-center group hover:-translate-y-2 transition duration-300">
+                    <div class="h-72 relative overflow-hidden">
+                         <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Mentor" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+                         <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                         <div class="absolute bottom-4 left-4">
+                             <h3 class="text-white text-xl font-bold">Lê Văn C</h3>
+                             <p class="text-brand-neon text-sm font-mono">DevOps Expert</p>
+                         </div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-600 text-sm mb-4">"Chuyên gia CI/CD và Cloud. Mọi thứ phải được Tự động hóa."</p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">AWS</span>
+                            <span class="px-2 py-1 bg-gray-100 text-gray-600 text-xs rounded border border-gray-200">Kubernetes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION: FAQ (Clean Accordion) -->
+    <section id="faq" class="py-20 bg-white">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Giải Đáp Thắc Mắc</h2>
+            <div class="space-y-4">
+                <div class="border border-gray-200 rounded-lg overflow-hidden group">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 group-hover:bg-white transition">
+                        <span class="font-semibold text-gray-800">Người mới bắt đầu (Zero kinh nghiệm) học được không?</span>
+                        <i class="fa-solid fa-plus text-brand-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white text-gray-600">
+                        <div class="py-4 border-t border-gray-100">
+                            Chắc chắn rồi! Lộ trình Zero-to-Hero được thiết kế riêng cho bạn. Chúng tôi bắt đầu từ tư duy lập trình căn bản nhất.
+                        </div>
+                    </div>
+                </div>
+                 <div class="border border-gray-200 rounded-lg overflow-hidden group">
+                    <button class="faq-btn w-full px-6 py-4 text-left flex justify-between items-center focus:outline-none bg-gray-50 group-hover:bg-white transition">
+                        <span class="font-semibold text-gray-800">Cam kết đầu ra việc làm như thế nào?</span>
+                        <i class="fa-solid fa-plus text-brand-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6 bg-white text-gray-600">
+                        <div class="py-4 border-t border-gray-100">
+                            100% Học viên tốt nghiệp đồ án cuối khóa được giới thiệu việc làm đến mạng lưới 50+ đối tác doanh nghiệp của FullHouse Dev.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-black text-gray-400 py-16 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-1">
+                    <a href="#" class="text-2xl font-bold text-white flex items-center gap-2 mb-4">
+                        <i class="fa-solid fa-code text-brand-500"></i> FullHouse<span class="text-brand-500">Dev</span>
+                    </a>
+                    <p class="text-sm mb-6">Đào tạo lập trình viên chất lượng cao. Khởi nghiệp từ đam mê, vững bước bằng kỹ năng.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-brand-500 hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-red-600 hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-black hover:text-white border border-gray-700 transition"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-6">Liên kết</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-brand-500 transition">Về chúng tôi</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Khóa học</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Sự kiện công nghệ</a></li>
+                        <li><a href="#" class="hover:text-brand-500 transition">Tuyển dụng Mentor</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Khóa học Hot</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li><a href="#" class="hover:text-brand-neon transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> Fullstack Java</a></li>
+                        <li><a href="#" class="hover:text-brand-neon transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> Frontend Master</a></li>
+                        <li><a href="#" class="hover:text-brand-neon transition flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs"></i> DevOps Foundation</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6">Liên hệ</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot mt-1 text-brand-500"></i>
+                            <span>123 Cầu Giấy, Hà Nội</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fa-solid fa-phone text-brand-500"></i>
+                            <span>0987.654.321</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-xs">
+                &copy; 2024 FullHouse Dev. All rights reserved. Designed with <i class="fa-solid fa-heart text-red-500"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- 1. Typing Effect Logic ---
+        const words = ["Lập Trình Viên.", "Kỹ Sư Phần Mềm.", "Người Giải Quyết Vấn Đề."];
+        let i = 0;
+        let timer;
+
+        function typeWriter() {
+            const heading = document.getElementById("typing-text");
+            const word = words[i];
+            let j = 0;
+            let isDeleting = false;
+
+            function loop() {
+                heading.innerHTML = word.substring(0, j);
+                
+                if (isDeleting) {
+                    j--;
+                } else {
+                    j++;
+                }
+
+                if (!isDeleting && j === word.length + 1) {
+                    isDeleting = true;
+                    setTimeout(loop, 2000); // Pause at end of word
+                } else if (isDeleting && j === 0) {
+                    isDeleting = false;
+                    i = (i + 1) % words.length;
+                    setTimeout(typeWriter, 500); // Pause before next word
+                    return;
+                } else {
+                    setTimeout(loop, isDeleting ? 50 : 100);
+                }
+            }
+            loop();
+        }
+        
+        // Start typing on load
+        document.addEventListener('DOMContentLoaded', () => {
+            typeWriter();
+            
+            // --- 2. Scroll Reveal Logic ---
+            const reveals = document.querySelectorAll('.reveal');
+
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                const elementVisible = 150;
+
+                reveals.forEach((reveal) => {
+                    const elementTop = reveal.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - elementVisible) {
+                        reveal.classList.add('active');
+                    }
+                });
+            }
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Trigger once on load
+        });
+
+        // --- 3. 3D Tilt Effect for Cards ---
+        const cards = document.querySelectorAll('.tilt-card');
+
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = ((y - centerY) / centerY) * -10; // Max rotation deg
+                const rotateY = ((x - centerX) / centerX) * 10;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // --- 4. Mobile Menu & FAQ (Standard) ---
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('.fa-solid');
+                
+                faqBtns.forEach(otherBtn => {
+                    if (otherBtn !== btn) {
+                        otherBtn.nextElementSibling.style.maxHeight = null;
+                        otherBtn.nextElementSibling.classList.remove('active');
+                        otherBtn.querySelector('.fa-solid').classList.remove('fa-minus');
+                        otherBtn.querySelector('.fa-solid').classList.add('fa-plus');
+                    }
+                });
+
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    content.classList.remove('active');
+                    icon.classList.remove('fa-minus');
+                    icon.classList.add('fa-plus');
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    content.classList.add('active');
+                    icon.classList.remove('fa-plus');
+                    icon.classList.add('fa-minus');
+                }
+            });
+        });
+
+        // --- 5. Slider Logic ---
+        function scrollContainer(containerId, direction) {
+            const container = document.getElementById(containerId);
+            container.scrollBy({ left: direction * 320, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
