@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduStar Tech - Tương Lai Giáo Dục</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Be Vietnam Pro"', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#2563EB', // Blue 600 (Darker blue for light bg)
+                        accent: '#E11D48', // Rose 600
+                        dark: '#0F172A', // Slate 900
+                    },
+                    backgroundImage: {
+                        // Light Grid Pattern
+                        'tech-grid': "linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)"
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+
+        /* Tech Grid Background Animation */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            mask-image: linear-gradient(to bottom, transparent, 5%, white, 95%, transparent);
+        }
+
+        /* Glassmorphism Light Mode */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+        .glass-card:hover {
+            border-color: rgba(37, 99, 235, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Bento Grid Specifics */
+        .bento-item {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .bento-item:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* FAQ Animation */
+        .faq-content {
+            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-content.active {
+            opacity: 1;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-600 bg-slate-50 overflow-x-hidden selection:bg-primary selection:text-white">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-slate-900 flex items-center gap-2 tracking-tighter">
+                <div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white shadow-lg shadow-blue-500/30">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                EduStar<span class="text-primary">.Tech</span>
+            </a>
+            
+            <div class="hidden md:flex gap-8 text-sm font-bold uppercase tracking-wide text-slate-500">
+                <a href="#vision" class="hover:text-primary transition-colors">Về chúng tôi</a>
+                <a href="#values" class="hover:text-primary transition-colors">Giá trị cốt lõi</a>
+                <a href="#teachers" class="hover:text-primary transition-colors">Giáo viên</a>
+                <a href="#faq" class="hover:text-primary transition-colors">Hỏi đáp</a>
+            </div>
+
+            <a href="#contact" class="hidden md:block px-6 py-2 bg-primary text-white rounded-full font-bold hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500/30 transition duration-300 transform hover:-translate-y-1">
+                Đăng Ký Ngay
+            </a>
+            
+             <!-- Mobile Menu Button -->
+             <button class="md:hidden text-2xl text-slate-700" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-100 p-4 flex flex-col gap-4 shadow-lg">
+            <a href="#vision" class="block py-2 text-slate-700 hover:text-primary font-medium">Về chúng tôi</a>
+            <a href="#values" class="block py-2 text-slate-700 hover:text-primary font-medium">Giá trị cốt lõi</a>
+            <a href="#teachers" class="block py-2 text-slate-700 hover:text-primary font-medium">Giáo viên</a>
+            <a href="#contact" class="block py-2 font-bold text-primary">Đăng ký ngay</a>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION: Light Tech Style -->
+    <header class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden bg-white">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-tech-grid bg-grid-pattern opacity-60 pointer-events-none"></div>
+        <!-- Colorful Blobs -->
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-blue-100/50 rounded-full blur-[100px] mix-blend-multiply filter opacity-70 animate-blob"></div>
+        <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-purple-100/50 rounded-full blur-[100px] mix-blend-multiply filter opacity-70 animate-blob animation-delay-2000"></div>
+
+        <div class="container mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 items-center">
+            <div data-aos="fade-right" data-aos-duration="1000">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-primary text-xs font-bold uppercase tracking-widest mb-6 hover:bg-blue-100 transition cursor-default">
+                    <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                    Công nghệ giáo dục 4.0
+                </div>
+                <h1 class="text-5xl lg:text-7xl font-extrabold text-slate-900 leading-tight mb-6">
+                    Bứt Phá <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-600">Giới Hạn Tri Thức</span>
+                </h1>
+                <p class="text-lg text-slate-600 mb-8 max-w-lg">
+                    Hệ thống giáo dục thông minh, cá nhân hóa lộ trình học tập bằng dữ liệu và công nghệ, giúp học viên phát huy tối đa tiềm năng.
+                </p>
+                <div class="flex gap-4">
+                    <button class="px-8 py-4 bg-primary text-white rounded-xl font-bold hover:bg-blue-700 transition shadow-xl shadow-blue-500/20 flex items-center gap-2 group">
+                        Khám Phá Ngay <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition"></i>
+                    </button>
+                    <button class="px-8 py-4 bg-white border border-slate-200 text-slate-700 rounded-xl font-bold hover:bg-slate-50 transition shadow-sm hover:shadow-md">
+                        Xem Video
+                    </button>
+                </div>
+            </div>
+            
+            <div class="relative hidden lg:block" data-aos="zoom-in" data-aos-duration="1200" data-aos-delay="200">
+                <!-- Abstract 3D Illustration Placeholder -->
+                <div class="relative w-full h-[500px] animate-float">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Future Tech" class="w-full h-full object-cover rounded-3xl shadow-2xl shadow-blue-900/10">
+                    
+                    <!-- Floating Cards -->
+                    <div class="absolute -left-10 top-20 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/50 shadow-xl shadow-slate-200/50" data-aos="fade-right" data-aos-delay="500">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center text-green-600"><i class="fa-solid fa-chart-line"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-500">Tiến độ</p>
+                                <p class="text-slate-900 font-bold">+150% Hiệu quả</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -right-5 bottom-32 bg-white/90 backdrop-blur-md p-4 rounded-xl border border-white/50 shadow-xl shadow-slate-200/50" data-aos="fade-left" data-aos-delay="700">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 bg-rose-100 rounded-lg flex items-center justify-center text-accent"><i class="fa-solid fa-user-graduate"></i></div>
+                            <div>
+                                <p class="text-xs text-slate-500">Học viên</p>
+                                <p class="text-slate-900 font-bold">5000+ Thành công</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- SECTION 1: VISION (Clean White) -->
+    <section id="vision" class="py-24 bg-white relative overflow-hidden border-t border-slate-100">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mb-6">
+                        Không Chỉ Là Học, <br>
+                        Đó Là <span class="text-primary">Trải Nghiệm</span>
+                    </h2>
+                    <p class="text-slate-600 text-lg mb-6 leading-relaxed">
+                        Tại EduStar, chúng tôi xóa bỏ rào cản của giáo dục truyền thống. Không còn những bài giảng một chiều nhàm chán, mọi thứ đều được tối ưu hóa.
+                    </p>
+                    <ul class="space-y-4">
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-primary text-xs"><i class="fa-solid fa-check"></i></div> 
+                            Cá nhân hóa lộ trình bằng AI
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-primary text-xs"><i class="fa-solid fa-check"></i></div> 
+                            Môi trường học tập hạnh phúc
+                        </li>
+                        <li class="flex items-center gap-3 text-slate-700 font-medium">
+                            <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-primary text-xs"><i class="fa-solid fa-check"></i></div> 
+                            Kết nối thực tế, kỹ năng toàn cầu
+                        </li>
+                    </ul>
+                </div>
+                <div class="relative group" data-aos="fade-left">
+                    <div class="absolute inset-0 bg-gradient-to-tr from-blue-200 to-purple-200 rounded-2xl transform rotate-3 opacity-50 group-hover:rotate-6 transition duration-500"></div>
+                    <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Vision" class="relative rounded-2xl shadow-2xl shadow-slate-200 w-full object-cover h-[400px]">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: GIÁ TRỊ CỐT LÕI (BENTO GRID - LIGHT) -->
+    <section id="values" class="py-24 bg-slate-50 relative">
+        <div class="absolute inset-0 bg-tech-grid bg-grid-pattern opacity-40 pointer-events-none"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-accent font-bold tracking-wider uppercase text-sm bg-rose-50 px-3 py-1 rounded-full">DNA Của Chúng Tôi</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mt-4">Giá Trị Cốt Lõi</h2>
+            </div>
+
+            <!-- BENTO GRID LAYOUT -->
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 auto-rows-[250px]">
+                
+                <!-- Card 1: Large Feature (Primary Blue) -->
+                <div class="md:col-span-2 md:row-span-2 bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 flex flex-col justify-between group bento-item overflow-hidden relative shadow-xl shadow-blue-500/20" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-[60px] group-hover:bg-white/20 transition duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center text-2xl text-white mb-6 border border-white/20">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Chất Lượng Thật</h3>
+                        <p class="text-blue-100 text-lg leading-relaxed">
+                            Chúng tôi cam kết không chạy theo thành tích ảo. Chất lượng được đo lường bằng sự tiến bộ thực sự của học viên mỗi ngày thông qua các bài kiểm tra năng lực chuẩn quốc tế.
+                        </p>
+                    </div>
+                    <div class="mt-6 flex items-center gap-2 text-white font-bold group-hover:translate-x-2 transition cursor-pointer">
+                        Tìm hiểu quy trình <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Vertical (White Card) -->
+                <div class="md:col-span-1 md:row-span-2 bg-white border border-slate-100 rounded-3xl p-8 group bento-item flex flex-col items-center text-center relative overflow-hidden shadow-lg shadow-slate-200/50" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-gradient-to-b from-transparent to-slate-50 opacity-50"></div>
+                    <div class="relative z-10 mt-auto w-full">
+                        <div class="w-16 h-16 bg-rose-50 mx-auto rounded-full flex items-center justify-center text-2xl text-accent mb-6 shadow-sm">
+                            <i class="fa-solid fa-lightbulb"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-2">Sáng Tạo</h3>
+                        <p class="text-sm text-slate-600 mb-8">
+                            Không có cách giải duy nhất. Chúng tôi khuyến khích tư duy đa chiều và giải quyết vấn đề sáng tạo.
+                        </p>
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" class="w-full h-32 object-cover rounded-xl opacity-80 group-hover:scale-105 transition duration-500">
+                    </div>
+                </div>
+
+                <!-- Card 3: Horizontal (White Card) -->
+                <div class="md:col-span-1 bg-white border border-slate-100 rounded-3xl p-6 group bento-item hover:shadow-lg transition shadow-md shadow-slate-200/40" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="flex justify-between items-start mb-4">
+                        <i class="fa-solid fa-heart text-3xl text-pink-500"></i>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-slate-300 group-hover:text-primary transition"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Tận Tâm</h3>
+                    <p class="text-sm text-slate-600">Giáo dục từ trái tim đến trái tim, sự thấu hiểu là chìa khóa.</p>
+                </div>
+
+                <!-- Card 4: Horizontal (Gradient Card) -->
+                <div class="md:col-span-1 bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-6 group bento-item flex flex-col justify-center shadow-lg" data-aos="zoom-in" data-aos-delay="400">
+                    <h3 class="text-4xl font-bold text-white mb-1">5000+</h3>
+                    <p class="text-slate-400 text-sm font-medium">Học viên tin tưởng</p>
+                    <div class="w-full bg-slate-700 h-1.5 mt-4 rounded-full overflow-hidden">
+                        <div class="bg-green-500 w-3/4 h-full rounded-full"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2.5: KHOÁ HỌC NỔI BẬT (FEATURED COURSES) -->
+    <section id="courses" class="py-24 bg-white border-t border-slate-100 relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-accent font-bold tracking-wider uppercase text-sm bg-rose-50 px-3 py-1 rounded-full">Lộ Trình Tinh Gọn</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mt-4">Khoá Học Ngôn Ngữ</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mt-4 rounded-full"></div>
+            </div>
+
+            <!-- Course Grid: 4 cols desktop, 2 cols tablet, 1 col mobile -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Course 1: C (Cyan) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <!-- Header Gradient -->
+                    <div class="h-40 bg-gradient-to-br from-cyan-400 to-teal-400 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-2xl font-bold relative z-10 uppercase">Khoá học C</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Từ cơ bản đến nâng cao</p>
+                    </div>
+                    <!-- Body -->
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học C Từ cơ bản đến chuyên sâu (kèm riêng)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.200.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 40 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 600 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 2: C++ (Blue) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="150">
+                    <div class="h-40 bg-gradient-to-br from-blue-500 to-indigo-500 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-2xl font-bold relative z-10 uppercase">Khoá học C++</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Từ cơ bản đến nâng cao</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học C++ từ cơ bản đến chuyên sâu (kèm riêng)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.200.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 40 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 600 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 3: Java (Purple) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-40 bg-gradient-to-br from-purple-500 to-fuchsia-600 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-2xl font-bold relative z-10 uppercase">Khoá học Java</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Backend chuyên nghiệp</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa Học Java từ cơ bản đến chuyên sâu (kèm riêng)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.200.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 40 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 400 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 4: Python (Yellow) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="250">
+                    <div class="h-40 bg-gradient-to-br from-yellow-400 to-orange-500 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-2xl font-bold relative z-10 uppercase">Khoá học Python</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Xử lý dữ liệu & AI</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học Python Từ cơ bản đến chuyên sâu (kèm riêng)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.200.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 32 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 400 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ROW 2 -->
+
+                <!-- Course 5: DSA (Red/Orange) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-40 bg-gradient-to-br from-rose-500 to-orange-500 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-xl font-bold relative z-10 uppercase">Cấu Trúc Dữ Liệu</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Và Giải Thuật</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học Cấu trúc dữ liệu và Giải thuật từ cơ bản</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.500.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 48 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 650 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 6: Competitive Programming (Dark Indigo) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="350">
+                    <div class="h-40 bg-gradient-to-br from-indigo-800 to-purple-800 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-xl font-bold relative z-10 uppercase">Lập Trình Thi Đấu</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Chinh phục giải thưởng</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học Lập Trình Thi Đấu (Competitive Programming)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">12.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">6.500.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 50 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 200 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 7: C# (Orange) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <div class="h-40 bg-gradient-to-br from-orange-400 to-red-500 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-2xl font-bold relative z-10 uppercase">Khoá học C#</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Phát triển ứng dụng</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Khóa học C# từ cơ bản đến chuyên sâu (kèm riêng)</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">4.500.000đ</span>
+                            <span class="text-accent font-bold text-xl">3.200.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 40 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 500 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course 8: English IT (Pink/Violet) -->
+                <div class="group bg-white rounded-2xl border border-slate-200 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 overflow-hidden" data-aos="fade-up" data-aos-delay="450">
+                    <div class="h-40 bg-gradient-to-br from-pink-500 to-rose-600 flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="text-white text-xl font-bold relative z-10 uppercase">Tiếng Anh</h3>
+                        <p class="text-white/90 text-xs relative z-10 mt-1">Chuyên ngành IT</p>
+                    </div>
+                    <div class="p-5">
+                        <h4 class="font-bold text-slate-800 text-lg mb-3 line-clamp-2 h-14">Tiếng Anh Chuyên Ngành IT toàn diện 4 kỹ năng</h4>
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="text-slate-400 text-sm line-through decoration-slate-400">5.000.000đ</span>
+                            <span class="text-accent font-bold text-xl">2.800.000đ</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm text-slate-500 border-t border-slate-100 pt-3">
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-chalkboard-user text-primary"></i> 30 buổi</span>
+                            <span class="flex items-center gap-2"><i class="fa-solid fa-book text-primary"></i> 197 bài tập</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="text-center mt-12" data-aos="fade-up">
+                <button class="px-8 py-3 bg-white border border-primary text-primary rounded-full font-bold hover:bg-primary hover:text-white transition shadow-sm hover:shadow-lg">
+                    Xem Tất Cả Khóa Học <i class="fa-solid fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2.8: VIDEO FEEDBACK (YOUTUBE GRID) -->
+    <section id="video-feedback" class="py-24 bg-slate-50 border-t border-slate-100">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="text-accent font-bold tracking-wider uppercase text-sm bg-rose-50 px-3 py-1 rounded-full">Người Thật Việc Thật</span>
+                <h2 class="text-3xl md:text-5xl font-bold text-slate-900 mt-4">Học Viên Nói Gì?</h2>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto">Lắng nghe những chia sẻ chân thực nhất từ các bạn học viên đã và đang học tập tại EduStar.</p>
+            </div>
+
+            <!-- Video Grid: 4 cols desktop, 2 cols tablet -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- Video 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/ScMzIvxBSi4" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Hành trình từ mất gốc đến 8.0 IELTS của Minh Tú</h4>
+                        <p class="text-sm text-primary font-medium">Nguyễn Minh Tú - HV Lớp IELTS</p>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="150">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/tgbNymZ7vqY" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Cách mình chinh phục C++ trong 3 tháng</h4>
+                        <p class="text-sm text-primary font-medium">Lê Văn Nam - ĐH Bách Khoa</p>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/LXb3EKWsInQ" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Review khoá học Java Backend tại EduStar</h4>
+                        <p class="text-sm text-primary font-medium">Trần Thanh Hằng - Fresher Dev</p>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="250">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/5qap5aO4i9A" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Tại sao mình chọn EduStar để học Python?</h4>
+                        <p class="text-sm text-primary font-medium">Hoàng Quốc Việt - Data Analyst</p>
+                    </div>
+                </div>
+
+                <!-- ROW 2 -->
+
+                <!-- Video 5 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/fJ9rUzIMcZQ" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Kinh nghiệm thi học sinh giỏi Tin học Quốc gia</h4>
+                        <p class="text-sm text-primary font-medium">Phạm Đức Huy - HSG Quốc Gia</p>
+                    </div>
+                </div>
+
+                <!-- Video 6 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="350">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/_uQrJ0TkZlc" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Tiếng Anh chuyên ngành IT quan trọng như thế nào?</h4>
+                        <p class="text-sm text-primary font-medium">Nguyễn Thu Thảo - Tester</p>
+                    </div>
+                </div>
+
+                <!-- Video 7 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="400">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/bIgO84Z4A5s" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Học C# để làm Game Unity, tại sao không?</h4>
+                        <p class="text-sm text-primary font-medium">Đỗ Quang Minh - Game Dev</p>
+                    </div>
+                </div>
+
+                <!-- Video 8 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-300 border border-slate-200 group" data-aos="fade-up" data-aos-delay="450">
+                    <div class="relative w-full aspect-video">
+                        <iframe class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/8ndjhPKd57M" title="Student Feedback" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="p-4">
+                        <h4 class="font-bold text-slate-800 line-clamp-2 mb-1">Cảm nhận về cơ sở vật chất và giáo viên</h4>
+                        <p class="text-sm text-primary font-medium">Vũ Thị Lan - Phụ huynh</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: TEACHERS (Clean Slider) -->
+    <section id="teachers" class="py-24 bg-white overflow-hidden border-t border-slate-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12">
+                <div data-aos="fade-right">
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-2">Người Truyền Lửa</h2>
+                    <p class="text-slate-500">Đội ngũ chuyên gia hàng đầu với phong cách hiện đại</p>
+                </div>
+                <div class="flex gap-3">
+                    <button onclick="scrollSlider('teacher-slider', 'left')" class="w-12 h-12 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition shadow-sm"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="scrollSlider('teacher-slider', 'right')" class="w-12 h-12 rounded-full border border-slate-200 text-slate-600 flex items-center justify-center hover:bg-primary hover:text-white hover:border-primary transition shadow-sm"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+            </div>
+
+            <div id="teacher-slider" class="flex gap-8 overflow-x-auto scrollbar-hide pb-12 snap-x snap-mandatory">
+                
+                <!-- Teacher Card 1 -->
+                <div class="min-w-[320px] bg-white rounded-3xl overflow-hidden snap-center group relative shadow-lg hover:shadow-2xl transition duration-500 border border-slate-100">
+                    <div class="h-[380px] relative">
+                        <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <span class="inline-block px-3 py-1 mb-2 text-xs font-bold text-primary bg-white rounded-full shadow-sm">IELTS Expert</span>
+                            <h3 class="text-2xl font-bold text-white">Cô Minh Anh</h3>
+                            <p class="text-blue-200 text-sm mb-4">Thạc sĩ TESOL</p>
+                            <p class="text-slate-200 text-sm opacity-0 group-hover:opacity-100 transition duration-300 h-0 group-hover:h-auto overflow-hidden">
+                                "Tiếng Anh không phải là môn học, nó là công cụ để khám phá thế giới."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher Card 2 -->
+                <div class="min-w-[320px] bg-white rounded-3xl overflow-hidden snap-center group relative shadow-lg hover:shadow-2xl transition duration-500 border border-slate-100">
+                    <div class="h-[380px] relative">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <span class="inline-block px-3 py-1 mb-2 text-xs font-bold text-white bg-blue-600 rounded-full shadow-sm">Toán Logic</span>
+                            <h3 class="text-2xl font-bold text-white">Thầy Quốc Tuấn</h3>
+                            <p class="text-blue-200 text-sm mb-4">Cử nhân Sư Phạm</p>
+                            <p class="text-slate-200 text-sm opacity-0 group-hover:opacity-100 transition duration-300 h-0 group-hover:h-auto overflow-hidden">
+                                "Biến những con số khô khan thành tư duy sắc bén."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Teacher Card 3 -->
+                 <div class="min-w-[320px] bg-white rounded-3xl overflow-hidden snap-center group relative shadow-lg hover:shadow-2xl transition duration-500 border border-slate-100">
+                    <div class="h-[380px] relative">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <span class="inline-block px-3 py-1 mb-2 text-xs font-bold text-white bg-green-600 rounded-full shadow-sm">Vật Lý</span>
+                            <h3 class="text-2xl font-bold text-white">Cô Thu Hà</h3>
+                            <p class="text-green-200 text-sm mb-4">Thạc sĩ Ứng dụng</p>
+                            <p class="text-slate-200 text-sm opacity-0 group-hover:opacity-100 transition duration-300 h-0 group-hover:h-auto overflow-hidden">
+                                "Thực nghiệm là con đường ngắn nhất để hiểu bản chất vũ trụ."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Teacher Card 4 -->
+                <div class="min-w-[320px] bg-white rounded-3xl overflow-hidden snap-center group relative shadow-lg hover:shadow-2xl transition duration-500 border border-slate-100">
+                    <div class="h-[380px] relative">
+                        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <div class="absolute bottom-0 left-0 p-6 w-full transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                            <span class="inline-block px-3 py-1 mb-2 text-xs font-bold text-white bg-green-600 rounded-full shadow-sm">Vật Lý</span>
+                            <h3 class="text-2xl font-bold text-white">Cô Thu Hà</h3>
+                            <p class="text-green-200 text-sm mb-4">Thạc sĩ Ứng dụng</p>
+                            <p class="text-slate-200 text-sm opacity-0 group-hover:opacity-100 transition duration-300 h-0 group-hover:h-auto overflow-hidden">
+                                "Thực nghiệm là con đường ngắn nhất để hiểu bản chất vũ trụ."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: TESTIMONIALS (Clean Cards) -->
+    <section id="testimonials" class="py-24 bg-slate-50 relative">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-slate-900 text-center mb-16" data-aos="fade-up">Dấu Ấn Thành Công</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Review 1 -->
+                <div class="bg-white p-8 rounded-2xl relative shadow-lg hover:-translate-y-2 transition duration-300 border border-slate-100" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fa-solid fa-quote-left text-4xl text-blue-100 absolute top-6 left-6"></i>
+                    <p class="text-slate-600 italic mb-6 relative z-10 pt-4">
+                        "Cách dạy ở đây rất khác. Không đọc chép, bọn mình được tranh luận, được dùng app để làm bài tập, cảm giác như đang chơi game vậy."
+                    </p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-12 h-12 rounded-full border border-slate-200">
+                        <div>
+                            <h4 class="text-slate-900 font-bold">Nguyễn Văn An</h4>
+                            <p class="text-xs text-primary font-semibold">Đậu ĐH Bách Khoa</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white p-8 rounded-2xl relative transform md:-translate-y-4 shadow-xl border border-primary/20" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute -top-3 right-8 bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">Top Rated</div>
+                    <i class="fa-solid fa-quote-left text-4xl text-blue-100 absolute top-6 left-6"></i>
+                    <p class="text-slate-600 italic mb-6 relative z-10 pt-4">
+                        "Mình tăng 2.0 IELTS chỉ trong 4 tháng. Cơ sở vật chất quá xịn, phòng lab hiện đại giúp mình luyện Speaking cực tốt."
+                    </p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" class="w-12 h-12 rounded-full border border-slate-200">
+                        <div>
+                            <h4 class="text-slate-900 font-bold">Trần Thị Mai</h4>
+                            <p class="text-xs text-primary font-semibold">IELTS 7.5</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white p-8 rounded-2xl relative shadow-lg hover:-translate-y-2 transition duration-300 border border-slate-100" data-aos="fade-up" data-aos-delay="300">
+                    <i class="fa-solid fa-quote-left text-4xl text-blue-100 absolute top-6 left-6"></i>
+                    <p class="text-slate-600 italic mb-6 relative z-10 pt-4">
+                        "Thầy cô ở đây như người bạn lớn. Những lúc stress vì thi cử, mình luôn nhận được lời khuyên và động lực từ các thầy cô."
+                    </p>
+                    <div class="flex items-center gap-4 border-t border-slate-100 pt-4">
+                        <img src="https://randomuser.me/api/portraits/men/85.jpg" class="w-12 h-12 rounded-full border border-slate-200">
+                        <div>
+                            <h4 class="text-slate-900 font-bold">Lê Quốc Bảo</h4>
+                            <p class="text-xs text-primary font-semibold">HSG Quốc Gia</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: FAQ (Light Accordion) -->
+    <section id="faq" class="py-24 bg-white border-t border-slate-100">
+        <div class="container mx-auto px-6 max-w-3xl">
+            <div class="text-center mb-12" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-slate-900">Câu Hỏi Thường Gặp</h2>
+            </div>
+            
+            <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+                <!-- FAQ Item -->
+                <div class="border border-slate-200 rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center text-slate-800 hover:bg-slate-50 transition">
+                        <span class="font-bold">Làm sao để đăng ký thi thử?</span>
+                        <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                            <i class="fa-solid fa-plus transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content bg-slate-50 px-6">
+                        <div class="pb-6 pt-2 text-slate-600">
+                            Bạn chỉ cần điền form ở cuối trang, bộ phận tư vấn sẽ liên hệ đặt lịch test 1-1 miễn phí trong vòng 24h.
+                        </div>
+                    </div>
+                </div>
+                
+                 <!-- FAQ Item -->
+                 <div class="border border-slate-200 rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center text-slate-800 hover:bg-slate-50 transition">
+                        <span class="font-bold">Lớp học có cam kết đầu ra không?</span>
+                        <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                            <i class="fa-solid fa-plus transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content bg-slate-50 px-6">
+                        <div class="pb-6 pt-2 text-slate-600">
+                            Có. EduStar cam kết bằng văn bản. Nếu không đạt kết quả như lộ trình, học viên được học lại miễn phí 100%.
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- FAQ Item -->
+                 <div class="border border-slate-200 rounded-xl bg-white overflow-hidden shadow-sm hover:shadow-md transition">
+                    <button class="faq-btn w-full px-6 py-5 text-left flex justify-between items-center text-slate-800 hover:bg-slate-50 transition">
+                        <span class="font-bold">Có hỗ trợ học online không?</span>
+                        <div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-primary">
+                            <i class="fa-solid fa-plus transition-transform duration-300"></i>
+                        </div>
+                    </button>
+                    <div class="faq-content bg-slate-50 px-6">
+                        <div class="pb-6 pt-2 text-slate-600">
+                            Hệ thống EduStar LMS cho phép học viên xem lại bài giảng, làm bài tập và tương tác với giáo viên mọi lúc mọi nơi.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA & FOOTER -->
+    <section id="contact" class="py-20 bg-slate-900 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 right-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 text-center relative z-10" data-aos="zoom-in">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-8">Bắt Đầu Hành Trình Của Bạn</h2>
+            <form class="max-w-lg mx-auto bg-white/10 backdrop-blur-md p-2 rounded-full flex border border-white/20 shadow-2xl">
+                <input type="tel" placeholder="Số điện thoại của bạn..." class="flex-1 px-6 bg-transparent text-white outline-none placeholder-slate-400">
+                <button type="button" onclick="alert('Hệ thống đã ghi nhận!')" class="bg-primary hover:bg-blue-600 text-white px-8 py-3 rounded-full font-bold transition shadow-lg shadow-primary/40 whitespace-nowrap">
+                    Tư Vấn Ngay
+                </button>
+            </form>
+            <p class="text-slate-400 mt-6 text-sm">Chúng tôi sẽ liên hệ trong vòng 30 phút làm việc.</p>
+        </div>
+    </section>
+
+    <footer class="bg-black text-slate-400 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 text-white font-bold text-xl">
+                <div class="w-8 h-8 bg-slate-800 rounded flex items-center justify-center shadow-lg shadow-slate-700/50"><i class="fa-solid fa-bolt text-primary"></i></div> EduStar Tech
+            </div>
+            <div class="text-sm">
+                &copy; 2024 EduStar Technology Education. All rights reserved.
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+                <a href="#" class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-primary hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- AOS Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init Animate On Scroll
+        AOS.init({
+            once: true, 
+            offset: 100, 
+            duration: 800,
+            easing: 'ease-out-cubic',
+        });
+
+        // FAQ Logic
+        const faqButtons = document.querySelectorAll('.faq-btn');
+        faqButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const content = btn.nextElementSibling;
+                const icon = btn.querySelector('.fa-plus');
+                
+                content.classList.toggle('active');
+                if (content.classList.contains('active')) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(45deg)';
+                } else {
+                    content.style.maxHeight = null;
+                    icon.style.transform = 'rotate(0deg)';
+                }
+            });
+        });
+
+        // Slider Logic
+        function scrollSlider(sliderId, direction) {
+            const slider = document.getElementById(sliderId);
+            const scrollAmount = 340; 
+            if (direction === 'left') {
+                slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Navbar blur effect on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                // Optional: make it even more opaque on scroll
+                nav.classList.replace('bg-white/80', 'bg-white/95');
+            } else {
+                nav.classList.remove('shadow-md');
+                nav.classList.replace('bg-white/95', 'bg-white/80');
+            }
+        });
+    </script>
+</body>
+</html>
